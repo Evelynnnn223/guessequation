@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 public class View {
 	public ArrayList<JLabel> ajl = new ArrayList<JLabel>();
-	private ArrayList<ImageIcon> ajbi = new ArrayList<ImageIcon>();
+	private ArrayList<ImageIcon> greyajbi = new ArrayList<ImageIcon>();
 	private ArrayList<ImageIcon> rajbi = new ArrayList<ImageIcon>();
-	private ArrayList<ImageIcon> yajbi = new ArrayList<ImageIcon>();
-	private ArrayList<ImageIcon> gajbi = new ArrayList<ImageIcon>();
+	private ArrayList<ImageIcon> yellowajbi = new ArrayList<ImageIcon>();
+	private ArrayList<ImageIcon> greenajbi = new ArrayList<ImageIcon>();
 	public int index = 0;// 当前操作的数字位置
 	public int line = 0;// 当前操作的数字位置
 	private JFrame frame;
@@ -47,10 +47,13 @@ public class View {
 		forward(rajbi.get(num));
 	}
 	public void yellowImage(int num) {
-		forward(yajbi.get(num));
+		forward(yellowajbi.get(num));
+	}
+	public void greyImage(int num) {
+		forward(greyajbi.get(num));
 	}
 	public void greenImage(int num) {
-		forward(gajbi.get(num));
+		forward(greenajbi.get(num));
 	}
 	public void creatButton(JPanel panel,ImageIcon icon) {
 		JButton button1 = new JButton();
