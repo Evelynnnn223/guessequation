@@ -6,7 +6,7 @@ import guessequation.modle.GuessModle;
 import guessequation.view.View;
 
 public class GuessController {
-	private ArrayList<String> list = new ArrayList<>();
+	private ArrayList<Character> list = new ArrayList<>();
 	private View view;
 	private GuessModle modle;
 	public GuessController(View view,GuessModle modle) {
@@ -14,7 +14,8 @@ public class GuessController {
 		this.modle = modle;
 	}
 	public void guess(int line) {
-		ArrayList<Integer> relist = modle.guessModle(line, list);
+		ArrayList<String> als = modle.getEquationList(list);
+		ArrayList<Integer> relist = modle.guessModle(line, als);
 		for(int i = 0;i<relist.size();i++) {
 			int value = relist.get(i);
 			if(value == 0) {
@@ -26,7 +27,7 @@ public class GuessController {
 			}
 		}
 	}
-	public void add(String str) {
+	public void add(char str) {
 		list.add(str);
 	}
 	public void remove() {

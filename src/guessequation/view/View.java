@@ -2,6 +2,9 @@ package guessequation.view;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import guessequation.modle.GuessModle;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -200,8 +203,25 @@ public class View {
 
 
 	public static void main(String[] args) {
-		View v = new View();
-		v.init(6);
+		
+//		View v = new View(); 
+//		v.init(6);
+
+		GuessModle gm = new GuessModle();
+		String str = "1+12*5=61";
+		ArrayList<Character> lstr = new ArrayList<Character>();
+		for(int i = 0;i<str.length();i++) {
+			lstr.add(str.charAt(i));
+		}
+		String re1 =gm.getEquation(lstr);
+		System.out.println(re1);
+		ArrayList<String> lstr1 = gm.getEquationList(lstr);
+		for(int i = 0;i<lstr1.size();i++) {
+			System.out.println(lstr1.get(i));
+		}
+//		for(int i = 0;i<10;i++) {
+//			System.out.println(gm.creatFun(6));
+//		}
 	}
 
 }
