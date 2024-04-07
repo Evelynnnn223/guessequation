@@ -7,7 +7,8 @@ public class GuessModle {
 	private ArrayList<String> list = new ArrayList<>();
 	
 	public void init(int size) {
-		
+		String s1 = "1+2=3";
+		list.add(s1);
 	}
 	public ArrayList<String> getEquationList(ArrayList<Character> lstr) {
 		ArrayList<String> lrec = new ArrayList<>(); 
@@ -197,9 +198,9 @@ public class GuessModle {
 //        }
 //        return null;
 //	}
-	public ArrayList<Integer> guessModle(int line,ArrayList<String> inlist){
+	public ArrayList<Integer> guessModle(ArrayList<String> inlist){
 		ArrayList<Integer> relist = new ArrayList<Integer>();
-		String sline = list.get(line);
+		String sline = list.get(0);
 		for(int i = 0;i<inlist.size();i++) {
 			int rec = sline.indexOf(inlist.get(i));
 			if(rec == -1) {

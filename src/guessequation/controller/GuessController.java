@@ -13,9 +13,9 @@ public class GuessController {
 		this.view = view;
 		this.modle = modle;
 	}
-	public void guess(int line) {
+	public void guess() {
 		ArrayList<String> als = modle.getEquationList(list);
-		ArrayList<Integer> relist = modle.guessModle(line, als);
+		ArrayList<Integer> relist = modle.guessModle(als);
 		for(int i = 0;i<relist.size();i++) {
 			int value = relist.get(i);
 			if(value == 0) {
