@@ -79,6 +79,9 @@ public class View {
 	public void initButton() {
 		
 	}
+	public void prompt() {
+		JOptionPane.showMessageDialog(frame, "Equation error!");
+	}
 	public void init(int column) {
 		this.column = column;
 		gm.init(1);
@@ -221,10 +224,14 @@ public class View {
 				public void actionPerformed(ActionEvent e) {
 					// 在点击按钮时显示一串字符
 					// JOptionPane.showMessageDialog(frame, "Hello, World!");
-					index = 0;
-					gc.guess();
-					index = 0;
-					line++;
+					if(gc.legal()) {
+						index = 0;
+						gc.guess();
+						index = 0;
+						line++;
+					}else {
+						prompt();
+					}
 				}
 			});
 
@@ -236,6 +243,7 @@ public class View {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(frame, "Error loading image: " + e.getMessage());
 		}
+		
 	}
 
 
