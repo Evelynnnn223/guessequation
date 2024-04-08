@@ -1,17 +1,21 @@
 package guessequation.controller;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.SwingUtilities;
+
 import guessequation.modle.GuessModle;
+import guessequation.view.GameView;
 import guessequation.view.View;
 
 public class GuessController {
 	private ArrayList<Character> list = new ArrayList<>();
 	private HashMap<Character,Integer> map = new HashMap<Character,Integer>();
-	private View view;
+	private GameView view;
 	private GuessModle modle;
-	public GuessController(View view,GuessModle modle) {
+	public GuessController(GameView view,GuessModle modle) {
 		this.view = view;
 		this.modle = modle;
 		map.put('0',0);
@@ -39,20 +43,54 @@ public class GuessController {
 		}
 	}
 	public void guess() {
-		ArrayList<String> als = modle.getEquationList(list);
+//		ArrayList<String> als = modle.getEquationList(list);
+		view.setIndex(0);
 		ArrayList<Integer> relist = modle.guessModle(list);
-		for(int i = 0;i<relist.size();i++) {
-			int value = relist.get(i);
-			char ind = list.get(i);
-			if(value == 0) {
-				view.greyImage(map.get(ind));
-			}else if(value == 1) {
-				view.greenImage(map.get(ind));
-			}else if(value == 2) {
-				view.yellowImage(map.get(ind));
+		Thread t = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO 自动生成的方法存根
+				for(int i = 0;i<relist.size();i++) {
+					int value = relist.get(i);
+					char ind = list.get(i);
+					if(value == 0) {
+						view.greyImage(map.get(ind));
+					}else if(value == 1) {
+						view.greenImage(map.get(ind));
+					}else if(value == 2) {
+						view.yellowImage(map.get(ind));
+					}
+					try {
+					SwingUtilities.invokeAndWait(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO 自动生成的方法存根
+							view.repaint(); 
+						}
+					});
+				} catch (InvocationTargetException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO 自动生成的 catch 块
+						e.printStackTrace();
+					}
+				}
+				view.setIndex(0);
+				view.lineAdd();
+				list.clear();
 			}
-		}
-		list.clear();
+			
+		});
+		t.start();
 	}
 	public void add(char str) {
 		list.add(str);
