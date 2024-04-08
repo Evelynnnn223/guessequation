@@ -40,7 +40,7 @@ public class GuessController {
 	}
 	public void guess() {
 		ArrayList<String> als = modle.getEquationList(list);
-		ArrayList<Integer> relist = modle.guessModle(als);
+		ArrayList<Integer> relist = modle.guessModle(list);
 		for(int i = 0;i<relist.size();i++) {
 			int value = relist.get(i);
 			char ind = list.get(i);
@@ -58,6 +58,8 @@ public class GuessController {
 		list.add(str);
 	}
 	public void remove() {
-		list.remove(list.size()-1);
+		if(!list.isEmpty()) {
+			list.remove(list.size()-1);
+		}
 	}
 }

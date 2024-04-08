@@ -198,7 +198,7 @@ public class GuessModle {
 //        }
 //        return null;
 //	}
-	public ArrayList<Integer> guessModle(ArrayList<String> inlist){
+	public ArrayList<Integer> guessModle(ArrayList<Character> inlist){
 		ArrayList<Integer> relist = new ArrayList<Integer>();
 		String sline = list.get(0);
 		for(int i = 0;i<inlist.size();i++) {

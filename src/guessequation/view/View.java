@@ -88,14 +88,25 @@ public class View {
 		frame = new JFrame("Button Example");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 设置窗口关闭时的操作
 		frame.setSize(800, 600); // 设置窗口大小
+		frame.setBackground(Color.WHITE);
 		// 创建 FlowLayout 实例并设置水平和垂直间距
 		FlowLayout layout = new FlowLayout(FlowLayout.CENTER, 5, 0);
+		JTabbedPane tabbedPane = new JTabbedPane();  
+		tabbedPane.setUI(new CustomTabbedPaneUI());
+		//tabbedPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT); 
+		JPanel tab1Pane1 = new JPanel();  
 		JPanel panelts = new JPanel();
+		tab1Pane1.setBackground(Color.WHITE);
+        JPanel tab2Panel = new JPanel();  
+        
 		panelts.setBackground(Color.WHITE);
 		panelts.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 		panel = new JPanel();
+		
+		tab2Panel.add(new JLabel("这是第二个标签页的内容"));  
+		
 		panel.setBackground(Color.WHITE);
-		frame.add(panel); // 将面板添加到窗口中
+		frame.add(tabbedPane, BorderLayout.CENTER);  
 		panel.add(panelts);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		Dimension dbutton = new Dimension(57, 57);
@@ -104,6 +115,15 @@ public class View {
 			BufferedImage image = ImageIO.read(new File("src/resource/1.png")); // 替换为你的图片路径
 			ImageIcon icon = new ImageIcon(image);
 			JPanel panelt = new JPanel();
+			ImageIcon tab1Icon = new ImageIcon("src/resource/n+.png");  
+	        ImageIcon tab2Icon = new ImageIcon("src/resource/set.png");  
+	        tabbedPane.setBackground(Color.WHITE);
+	        tabbedPane.setBorder(null);
+	        tabbedPane.addTab(null, tab1Icon, tab1Pane1, "游戏");
+	        tabbedPane.addTab(null, tab2Icon, tab2Panel, "设置");
+	        
+	        //tabbedPane.addTab("标签1", panel); 
+	        //tabbedPane.addTab("标签2", tab2Panel);  
 			panelt.setBackground(Color.WHITE);
 			panelt.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 			for (int j = 0; j < 6; j++) {
@@ -237,6 +257,7 @@ public class View {
 
 			panel.add(panel2);
 			panel.add(panel3);
+			tab1Pane1.add(panel);
 			// 显示窗口
 			frame.setVisible(true);
 		} catch (IOException e) {
@@ -250,7 +271,7 @@ public class View {
 	public static void main(String[] args) {
 		
 		View v = new View(); 
-		v.init(5);
+		v.init(12);
 
 //		GuessModle gm = new GuessModle();
 //		String str = "1+12*5=61";
