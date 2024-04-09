@@ -3,7 +3,7 @@ package guessequation.view;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import guessequation.controller.GuessController;
+import guessequation.controller.GameController;
 import guessequation.modle.GuessModle;
 
 import java.awt.*;
@@ -24,7 +24,7 @@ public class View {
 //	private ArrayList<JButton> setbut1 = new ArrayList<JButton>();
 //	private ArrayList<Integer> setbut2 = new ArrayList<Integer>();
 //	private GuessModle gm = new GuessModle();
-//	private GuessController gc = new GuessController(this, gm);
+//	private GameController gc = new GameController(this, gm);
 //	public int index = 0;// 当前操作的数字位置
 //	public int line = 0;// 当前操作的数字位置
 //	private JFrame frame;
@@ -36,7 +36,7 @@ public class View {
 //		frame.setSize(800, 600); // 设置窗口大小
 //		frame.setBackground(Color.WHITE);
 //	}
-//	public GuessController getGuessController() {
+//	public GameController getGuessController() {
 //		return gc;
 //	}
 //	public int getColumn() {
@@ -373,8 +373,9 @@ public class View {
 		Action ac = new Action();
 		GameView gv = new GameView(5,ac);
 		SetView sv = new SetView(5,ac);
+		HelpView hv = new HelpView();
 		GuessModle gm = new GuessModle();
-		GuessController gc = new GuessController(gv, gm);
+		GameController gc = new GameController(gv, gm);
 		MainView mv = new MainView(gm, gc);
 		ac.setGv(gv);
 		ac.setSv(sv);
@@ -382,9 +383,10 @@ public class View {
 		gm.init(1);
 		ImageIcon tab1Icon = new ImageIcon("src/resource/n+.png");
 		ImageIcon tab2Icon = new ImageIcon("src/resource/set.png");
+		ImageIcon tab3Icon = new ImageIcon("src/resource/help.png");
 		mv.addTab(gv, tab1Icon, "游戏");
 		mv.addTab(sv, tab2Icon, "设置");
-		
+		mv.addTab(hv, tab3Icon, "帮助");
 //		View v = new View(); 
 //		v.init(5);
 		

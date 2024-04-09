@@ -10,12 +10,12 @@ import guessequation.modle.GuessModle;
 import guessequation.view.GameView;
 import guessequation.view.View;
 
-public class GuessController {
+public class GameController {
 	private ArrayList<Character> list = new ArrayList<>();
 	private HashMap<Character,Integer> map = new HashMap<Character,Integer>();
 	private GameView view;
 	private GuessModle modle;
-	public GuessController(GameView view,GuessModle modle) {
+	public GameController(GameView view,GuessModle modle) {
 		this.view = view;
 		this.modle = modle;
 		map.put('0',0);
@@ -91,6 +91,9 @@ public class GuessController {
 			
 		});
 		t.start();
+	}
+	public void clearList() {
+		list.clear();
 	}
 	public void add(char str) {
 		list.add(str);

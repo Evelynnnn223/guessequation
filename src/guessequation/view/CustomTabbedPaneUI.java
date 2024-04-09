@@ -1,8 +1,11 @@
 package guessequation.view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;  
 import javax.swing.plaf.basic.BasicTabbedPaneUI;  
-import java.awt.*;  
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;  
   
 public class CustomTabbedPaneUI extends BasicTabbedPaneUI {  
 
@@ -25,7 +28,13 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
     	g.setColor(Color.WHITE);  
         g.fillRect(0, 0, tabPane.getWidth(), tabPane.getHeight());  
         super.paintTabArea(g, tabPlacement, selectedIndex);  
-        // 在这里可以进一步自定义选中标签的外观  
+        try {  
+            // 加载图片  
+        	Image image = ImageIO.read(new File("src/resource/head.png"));  
+        	g.drawImage(image, 600, 0, null);  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }  
     }
     
     @Override  

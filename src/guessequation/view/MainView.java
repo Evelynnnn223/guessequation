@@ -7,15 +7,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import guessequation.controller.GuessController;
+import guessequation.controller.GameController;
 import guessequation.modle.GuessModle;
 
 public class MainView {
 	private GuessModle gm;
-	private GuessController gc;
+	private GameController gc;
 	private JFrame frame;
 	private JTabbedPane tabbedPane;
-	public MainView(GuessModle gm, GuessController gc) {
+	public MainView(GuessModle gm, GameController gc) {
 		frame = new JFrame("Button Example");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 设置窗口关闭时的操作
 		frame.setSize(800, 680); // 设置窗口大小
@@ -25,7 +25,7 @@ public class MainView {
 		init();
 	}
 
-	public GuessController getGuessController() {
+	public GameController getGuessController() {
 		return gc;
 	}
 

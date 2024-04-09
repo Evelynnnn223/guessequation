@@ -6,6 +6,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
-import guessequation.controller.GuessController;
+import guessequation.controller.GameController;
 import guessequation.modle.GuessModle;
 
 public class GameView extends JPanel {
@@ -81,26 +84,6 @@ public class GameView extends JPanel {
 	public void switchImage(ImageIcon icon) {
 		JLabel jl = ajl.get(this.line * column + this.index);
 		jl.setIcon(icon);
-//		Runnable run = new Runnable() {  
-//		    @Override  
-//		    public void run() {  
-//		        // 更新UI组件...  
-//		    	jl.repaint();  
-//		    }  
-//		};
-//		ajl.get(this.line * column + this.index).updateUI();
-//		ajl.get(this.line * column + this.index).revalidate();  
-//		ajl.get(this.line * column + this.index).repaint();
-//		SwingUtilities.invokeLater();
-//		try {
-//			SwingUtilities.invokeAndWait(run);
-//		} catch (InvocationTargetException e) {
-//			// TODO 自动生成的 catch 块
-//			e.printStackTrace();
-//		} catch (InterruptedException e) {
-//			// TODO 自动生成的 catch 块
-//			e.printStackTrace();
-//		}
 	}
 	public void forward(ImageIcon icon) {
 		if (this.index < column) {
@@ -124,7 +107,7 @@ public class GameView extends JPanel {
 	public void greenImage(int num) {
 		forward(greenajbi.get(num));
 	}
-	public void creatButton(JPanel panel,ImageIcon icon,char str,Dimension dbutton) {
+	public void creatButton(JPanel panel,ImageIcon icon,ImageIcon hoticon,char str,Dimension dbutton) {
 		JButton button1 = new JButton();
 		button1.setPreferredSize(dbutton);
 		button1.setIcon(icon);
@@ -135,8 +118,31 @@ public class GameView extends JPanel {
 		ButtonListener bsymbol = new ButtonListener(csymbol);
 		// 为按钮添加点击事件监听器
 		button1.addActionListener(bsymbol);
+		// 为按钮添加鼠标监听器
+        button1.addMouseListener(new MouseAdapter() {  
+            @Override  
+            public void mousePressed(MouseEvent e) {  
+                button1.setIcon(hoticon); // 鼠标点击时设置图标  
+            }  
+  
+            @Override  
+            public void mouseReleased(MouseEvent e) {  
+                button1.setIcon(icon); // 鼠标释放时设置回悬停图标  
+            }  
+            @Override  
+            public void mouseEntered(MouseEvent e) {  
+                // 鼠标进入按钮区域时，设置悬停状态的图标  
+                button1.setIcon(hoticon);  
+            }  
+  
+            @Override  
+            public void mouseExited(MouseEvent e) {  
+                // 鼠标离开按钮区域时，设置正常状态的图标  
+                button1.setIcon(icon);  
+            }  
+        });  
 	}
-	public void initgrid(int column) {
+	public void initGrid(int column) {
 		this.line = 0;
 		this.index = 0;
 		this.column = column;
@@ -169,7 +175,7 @@ public class GameView extends JPanel {
 		panel.setBackground(Color.WHITE);
 		panel.add(panelts);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		Dimension dbutton = new Dimension(57, 57);
+		Dimension dbutton = new Dimension(55, 57);
 			// 加载图片
 			ImageIcon icon = new ImageIcon("src/resource/1.png");
 			JPanel panelt = new JPanel();
@@ -211,39 +217,49 @@ public class GameView extends JPanel {
 			
 			// 加载自定义图片
 			ImageIcon icon1 = new ImageIcon("src/resource/number1.png");
+			ImageIcon hoticon1 = new ImageIcon("src/resource/hotnumber1.png");
 			// 创建一个按钮
-			creatButton(panel2, icon1,'1',dbutton);
+			creatButton(panel2, icon1,hoticon1,'1',dbutton);
 			// 加载自定义图片
 			ImageIcon icon2 = new ImageIcon("src/resource/number2.png");
+			ImageIcon hoticon2 = new ImageIcon("src/resource/hotnumber2.png");
 			// 创建一个按钮
-			creatButton(panel2, icon2,'2',dbutton);
+			creatButton(panel2, icon2,hoticon2,'2',dbutton);
 			// 加载自定义图片
 			ImageIcon icon3 = new ImageIcon("src/resource/number3.png");
+			ImageIcon hoticon3 = new ImageIcon("src/resource/hotnumber3.png");
 			// 创建一个按钮
-			creatButton(panel2, icon3,'3',dbutton);
+			creatButton(panel2, icon3,hoticon3,'3',dbutton);
 			// 加载自定义图片
 			ImageIcon icon4 = new ImageIcon("src/resource/number4.png");
+			ImageIcon hoticon4 = new ImageIcon("src/resource/hotnumber4.png");
 			// 创建一个按钮
-			creatButton(panel2, icon4,'4',dbutton);
+			creatButton(panel2, icon4,hoticon4,'4',dbutton);
 			// 加载自定义图片
 			ImageIcon icon5 = new ImageIcon("src/resource/number5.png");
-			creatButton(panel2, icon5,'5',dbutton);
+			ImageIcon hoticon5 = new ImageIcon("src/resource/hotnumber5.png");
+			creatButton(panel2, icon5,hoticon5,'5',dbutton);
 			// 加载自定义图片
 			ImageIcon icon6 = new ImageIcon("src/resource/number6.png");
-			creatButton(panel2, icon6,'6',dbutton);
+			ImageIcon hoticon6 = new ImageIcon("src/resource/hotnumber6.png");
+			creatButton(panel2, icon6,hoticon6,'6',dbutton);
 			// 加载自定义图片
 			ImageIcon icon7 = new ImageIcon("src/resource/number7.png");
-			creatButton(panel2, icon7,'7',dbutton);
+			ImageIcon hoticon7 = new ImageIcon("src/resource/hotnumber7.png");
+			creatButton(panel2, icon7,hoticon7,'7',dbutton);
 			// 加载自定义图片
 			ImageIcon icon8 = new ImageIcon("src/resource/number8.png");
-			creatButton(panel2, icon8,'8',dbutton);
+			ImageIcon hoticon8 = new ImageIcon("src/resource/hotnumber8.png");
+			creatButton(panel2, icon8,hoticon8,'8',dbutton);
 			// 加载自定义图片
 			ImageIcon icon9 = new ImageIcon("src/resource/number9.png");
-			creatButton(panel2, icon9,'9',dbutton);
+			ImageIcon hoticon9 = new ImageIcon("src/resource/hotnumber9.png");
+			creatButton(panel2, icon9,hoticon9,'9',dbutton);
 			// 加载自定义图片
 			ImageIcon icon0 = new ImageIcon("src/resource/number0.png");
+			ImageIcon hoticon0 = new ImageIcon("src/resource/hotnumber0.png");
 			// 创建一个按钮
-			creatButton(panel2, icon0,'0',dbutton);
+			creatButton(panel2, icon0,hoticon0,'0',dbutton);
 
 			JPanel panel3 = new JPanel();
 			panel3.setBackground(Color.WHITE);
@@ -252,10 +268,33 @@ public class GameView extends JPanel {
 			// 创建一个按钮
 			JButton button11 = new JButton();
 			ImageIcon iconback = new ImageIcon("src/resource/back.png");
+			ImageIcon hoticonback = new ImageIcon("src/resource/hotback.png");
 			button11.setPreferredSize(dbutton2);
 			button11.setIcon(iconback);
 			button11.setBorderPainted(false); // 不绘制按钮边框
 			button11.setContentAreaFilled(false); // 不填充按钮内容区域背景
+			button11.addMouseListener(new MouseAdapter() {  
+	            @Override  
+	            public void mousePressed(MouseEvent e) {  
+	                button11.setIcon(hoticonback); // 鼠标点击时设置图标  
+	            }  
+	  
+	            @Override  
+	            public void mouseReleased(MouseEvent e) {  
+	                button11.setIcon(iconback); // 鼠标释放时设置回悬停图标  
+	            }  
+	            @Override  
+	            public void mouseEntered(MouseEvent e) {  
+	                // 鼠标进入按钮区域时，设置悬停状态的图标  
+	                button11.setIcon(hoticonback);  
+	            }  
+	  
+	            @Override  
+	            public void mouseExited(MouseEvent e) {  
+	                // 鼠标离开按钮区域时，设置正常状态的图标  
+	                button11.setIcon(iconback);  
+	            }  
+			});
 			panel3.add(button11); // 将按钮添加到面板中
 			Command cback = new GameBackCommand(icon, ac);
 			ButtonListener bback = new ButtonListener(cback);
@@ -264,26 +303,54 @@ public class GameView extends JPanel {
 			Dimension dbutton1 = new Dimension(64, 55);
 			// 创建一个按钮
 			ImageIcon iconsum = new ImageIcon("src/resource/sum.png");
-			creatButton(panel3, iconsum,'+',dbutton1);
+			ImageIcon hoticonsum = new ImageIcon("src/resource/hotsum.png");
+			creatButton(panel3, iconsum,hoticonsum,'+',dbutton1);
 			// 创建一个按钮
 			ImageIcon iconreduce = new ImageIcon("src/resource/reduce.png");
-			creatButton(panel3, iconreduce,'-',dbutton1);
+			ImageIcon hoticonreduce = new ImageIcon("src/resource/hotreduce.png");
+			creatButton(panel3, iconreduce,hoticonreduce,'-',dbutton1);
 			// 创建一个按钮
 			ImageIcon iconride = new ImageIcon("src/resource/ride.png");
-			creatButton(panel3, iconride,'*',dbutton1);
+			ImageIcon hoticonride = new ImageIcon("src/resource/hotride.png");
+			creatButton(panel3, iconride,hoticonride,'*',dbutton1);
 			// 创建一个按钮
 			ImageIcon iconexcept = new ImageIcon("src/resource/except.png");
-			creatButton(panel3, iconexcept,'/',dbutton1);
+			ImageIcon hoticonexcept = new ImageIcon("src/resource/hotexcept.png");
+			creatButton(panel3, iconexcept,hoticonexcept,'/',dbutton1);
 			// 创建一个按钮
 			ImageIcon iconequal = new ImageIcon("src/resource/equal.png");
-			creatButton(panel3, iconequal,'=',dbutton1);
+			ImageIcon hoticonequal = new ImageIcon("src/resource/hotequal.png");
+			creatButton(panel3, iconequal,hoticonequal,'=',dbutton1);
 			// 创建一个按钮
 			JButton button17 = new JButton();
 			ImageIcon iconenter = new ImageIcon("src/resource/enter.png");
+			ImageIcon hoticonenter = new ImageIcon("src/resource/hotenter.png");
 			button17.setPreferredSize(dbutton2);
 			button17.setIcon(iconenter);
 			button17.setBorderPainted(false); // 不绘制按钮边框
 			button17.setContentAreaFilled(false); // 不填充按钮内容区域背景
+			button17.addMouseListener(new MouseAdapter() {  
+	            @Override  
+	            public void mousePressed(MouseEvent e) {  
+	                button17.setIcon(hoticonenter); // 鼠标点击时设置图标  
+	            }  
+	  
+	            @Override  
+	            public void mouseReleased(MouseEvent e) {  
+	                button17.setIcon(iconenter); // 鼠标释放时设置回悬停图标  
+	            }  
+	            @Override  
+	            public void mouseEntered(MouseEvent e) {  
+	                // 鼠标进入按钮区域时，设置悬停状态的图标  
+	                button17.setIcon(hoticonenter);  
+	            }  
+	  
+	            @Override  
+	            public void mouseExited(MouseEvent e) {  
+	                // 鼠标离开按钮区域时，设置正常状态的图标  
+	                button17.setIcon(iconenter);  
+	            }  
+			});
 			panel3.add(button17); // 将按钮添加到面板中
 			Command center = new GameEnterCommand(ac);
 			ButtonListener benter = new ButtonListener(center);
@@ -291,7 +358,7 @@ public class GameView extends JPanel {
 			panel.add(panel2);
 			panel.add(panel3);
 			this.add(panel);
-			initgrid(column);
+			initGrid(column);
 	}
 	public void prompt() {
 		JOptionPane.showMessageDialog(this, "Equation error!");

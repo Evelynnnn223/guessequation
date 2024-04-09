@@ -35,7 +35,26 @@ public class SetView extends JPanel {
 	public ArrayList<Integer> getSetbut2() {
 		return setbut2;
 	}
-
+	public void updateSetAirth(int c,JButton button1) {
+		if(setbut2.get(c-13) == 1 && setbut2.stream().filter(v -> v == 1).count() > 1) {
+			ImageIcon icon = new ImageIcon("src/resource/set"+c+".png");
+			button1.setIcon(icon);
+			setbut2.set(c-13, 0);
+		}else {
+			ImageIcon icon1 = new ImageIcon("src/resource/setgreen"+c+".png");
+			button1.setIcon(icon1);
+			setbut2.set(c-13, 1);
+		}
+	}
+	public void updateSetNum(int num,JButton button1) {
+		for(int i=5;i<13;i++) {
+			JButton button = setbut1.get(i-5);
+			ImageIcon icon = new ImageIcon("src/resource/set"+i+".png");
+			button.setIcon(icon);
+		}
+		ImageIcon icon1 = new ImageIcon("src/resource/setgreen"+num+".png");
+		button1.setIcon(icon1);
+	}
 	public void init(int column) {
 		this.setBackground(Color.WHITE);
 		// 创建 FlowLayout 实例并设置水平和垂直间距
