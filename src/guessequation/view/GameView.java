@@ -366,4 +366,7 @@ public class GameView extends JPanel {
 	public void won() {
 		JOptionPane.showMessageDialog(this, "       🏆 win the game!");
 	}
+	public void fail() {
+		JOptionPane.showMessageDialog(this, "       fail the game!");
+	}
 }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.swing.SwingUtilities;
 
 import guessequation.modle.GuessModle;
+import guessequation.modle.StatisticsModle;
 import guessequation.view.GameView;
 import guessequation.view.View;
 
@@ -15,9 +16,12 @@ public class GameController {
 	private HashMap<Character,Integer> map = new HashMap<Character,Integer>();
 	private GameView view;
 	private GuessModle modle;
-	public GameController(GameView view,GuessModle modle) {
+	private StatisticsModle smodle;
+	private StatisticsController sc;
+	public GameController(GameView view,GuessModle modle,StatisticsModle smodle) {
 		this.view = view;
 		this.modle = modle;
+		this.smodle = smodle;
 		map.put('0',0);
 		map.put('1',1);
 		map.put('2',2);
@@ -86,12 +90,25 @@ public class GameController {
 						e.printStackTrace();
 					}
 				}
+				smodle.setList(view.getLine(), greenSum);
 				view.setIndex(0);
 				view.lineAdd();
 				list.clear();
 				if(greenSum == relist.size()) {
 					view.won(); 
-					view.initGrid(view.getColumn());			
+					view.initGrid(view.getColumn());	
+					smodle.addGamesPlayed();
+					smodle.addGamesWon();
+					smodle.setPercentageWin((smodle.getGamesWon()*1.0/smodle.getGamesPlayed())*100);
+					smodle.setBestTry(view.getColumn());
+					smodle.initCorrectNumberList();
+				}else if(greenSum != relist.size() && view.getLine() >= 6) {
+					view.fail(); 
+					view.initGrid(view.getColumn());	
+					smodle.addGamesPlayed();
+					smodle.setPercentageWin((smodle.getGamesWon()*1.0/smodle.getGamesPlayed())*100);
+					smodle.setBestTry(view.getColumn());
+					smodle.initCorrectNumberList();
 				}
 			}
 			

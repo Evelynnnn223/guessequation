@@ -4,7 +4,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import guessequation.controller.GameController;
+import guessequation.controller.StatisticsController;
 import guessequation.modle.GuessModle;
+import guessequation.modle.StatisticsModle;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -374,19 +376,27 @@ public class View {
 		GameView gv = new GameView(5,ac);
 		SetView sv = new SetView(5,ac);
 		HelpView hv = new HelpView();
+		StatisticsView stv = new StatisticsView();
+		StatisticsModle smodle = new StatisticsModle();
+		StatisticsController sc = new StatisticsController(smodle, stv);
+		stv.setSc(sc);
+		stv.setColumn(gv.getColumn());
 		GuessModle gm = new GuessModle();
-		GameController gc = new GameController(gv, gm);
+		GameController gc = new GameController(gv, gm,smodle);
 		MainView mv = new MainView(gm, gc);
 		ac.setGv(gv);
 		ac.setSv(sv);
 		ac.setView(mv);
+		ac.setStv(stv);
 		gm.init(1);
 		ImageIcon tab1Icon = new ImageIcon("src/resource/n+.png");
-		ImageIcon tab2Icon = new ImageIcon("src/resource/set.png");
-		ImageIcon tab3Icon = new ImageIcon("src/resource/help.png");
+		ImageIcon tab2Icon = new ImageIcon("src/resource/statistics.png");
+		ImageIcon tab3Icon = new ImageIcon("src/resource/set.png");
+		ImageIcon tab4Icon = new ImageIcon("src/resource/help.png");
 		mv.addTab(gv, tab1Icon, "游戏");
-		mv.addTab(sv, tab2Icon, "设置");
-		mv.addTab(hv, tab3Icon, "帮助");
+		mv.addTab(stv, tab2Icon, "统计");
+		mv.addTab(sv, tab3Icon, "设置");
+		mv.addTab(hv, tab4Icon, "帮助");
 //		View v = new View(); 
 //		v.init(5);
 		

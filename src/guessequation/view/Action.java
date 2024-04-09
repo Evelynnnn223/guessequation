@@ -10,6 +10,7 @@ public class Action {
 	private GameView gv;
 	private MainView view;
 	private SetView sv;
+	private StatisticsView stv;
 	
 	public Action() {
 		super();
@@ -25,6 +26,10 @@ public class Action {
 
 	public void setSv(SetView sv) {
 		this.sv = sv;
+	}
+
+	public void setStv(StatisticsView stv) {
+		this.stv = stv;
 	}
 
 	public void enter() {
@@ -51,6 +56,7 @@ public class Action {
 		GameController gc = view.getGuessController();
 		gv.initGrid(num);
 		gc.clearList();
+		stv.setColumn(num);
 	}
 	public void arithmetic(int c,JButton button1) {
 		sv.updateSetAirth(c, button1);
