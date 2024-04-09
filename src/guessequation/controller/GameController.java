@@ -34,9 +34,9 @@ public class GameController {
 		map.put('/',13);
 		map.put('=',14);
 	}
-	public boolean legal() {
+	public boolean legal(int column) {
 		String re1 =modle.getEquation(list);
-		if(modle.legal(re1)) {
+		if(modle.legal(re1,column)) {
 			return true;
 		}else {
 			return false;
@@ -51,6 +51,7 @@ public class GameController {
 			@Override
 			public void run() {
 				// TODO 自动生成的方法存根
+				int greenSum = 0;
 				for(int i = 0;i<relist.size();i++) {
 					int value = relist.get(i);
 					char ind = list.get(i);
@@ -58,6 +59,7 @@ public class GameController {
 						view.greyImage(map.get(ind));
 					}else if(value == 1) {
 						view.greenImage(map.get(ind));
+						greenSum++;
 					}else if(value == 2) {
 						view.yellowImage(map.get(ind));
 					}
@@ -78,7 +80,7 @@ public class GameController {
 					e.printStackTrace();
 				}
 					try {
-						Thread.sleep(500);
+						Thread.sleep(300);
 					} catch (InterruptedException e) {
 						// TODO 自动生成的 catch 块
 						e.printStackTrace();
@@ -87,6 +89,10 @@ public class GameController {
 				view.setIndex(0);
 				view.lineAdd();
 				list.clear();
+				if(greenSum == relist.size()) {
+					view.won(); 
+					view.initGrid(view.getColumn());			
+				}
 			}
 			
 		});

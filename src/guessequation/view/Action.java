@@ -29,7 +29,7 @@ public class Action {
 
 	public void enter() {
 		GameController gc = view.getGuessController();
-		if(gc.legal()) {
+		if(gc.legal(gv.getColumn())) {
 			gc.guess();
 		}else {
 			gv.prompt();

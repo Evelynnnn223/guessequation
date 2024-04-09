@@ -41,8 +41,8 @@ public class GameView extends JPanel {
 	private ArrayList<ImageIcon> yellowajbi = new ArrayList<ImageIcon>();
 	private ArrayList<ImageIcon> greenajbi = new ArrayList<ImageIcon>();
 	private Action ac;
-	private int index = 0;// µ±Ç°²Ù×÷µÄÊı×ÖÎ»ÖÃ
-	private int line = 0;// µ±Ç°²Ù×÷µÄÊı×ÖÎ»ÖÃ
+	private int index = 0;// å½“å‰æ“ä½œçš„æ•°å­—ä½ç½®
+	private int line = 0;// å½“å‰æ“ä½œçš„æ•°å­—ä½ç½®
 	private int column;
 	public GameView(int num,Action ac) {
 		this.ac = ac;
@@ -111,33 +111,33 @@ public class GameView extends JPanel {
 		JButton button1 = new JButton();
 		button1.setPreferredSize(dbutton);
 		button1.setIcon(icon);
-		button1.setBorderPainted(false); // ²»»æÖÆ°´Å¥±ß¿ò
-		button1.setContentAreaFilled(false); // ²»Ìî³ä°´Å¥ÄÚÈİÇøÓò±³¾°
-		panel.add(button1); // ½«°´Å¥Ìí¼Óµ½Ãæ°åÖĞ
+		button1.setBorderPainted(false); // ä¸ç»˜åˆ¶æŒ‰é’®è¾¹æ¡†
+		button1.setContentAreaFilled(false); // ä¸å¡«å……æŒ‰é’®å†…å®¹åŒºåŸŸèƒŒæ™¯
+		panel.add(button1); // å°†æŒ‰é’®æ·»åŠ åˆ°é¢æ¿ä¸­
 		Command csymbol = new GameSymbolCommand(icon, str, ac);
 		ButtonListener bsymbol = new ButtonListener(csymbol);
-		// Îª°´Å¥Ìí¼Óµã»÷ÊÂ¼ş¼àÌıÆ÷
+		// ä¸ºæŒ‰é’®æ·»åŠ ç‚¹å‡»äº‹ä»¶ç›‘å¬å™¨
 		button1.addActionListener(bsymbol);
-		// Îª°´Å¥Ìí¼ÓÊó±ê¼àÌıÆ÷
+		// ä¸ºæŒ‰é’®æ·»åŠ é¼ æ ‡ç›‘å¬å™¨
         button1.addMouseListener(new MouseAdapter() {  
             @Override  
             public void mousePressed(MouseEvent e) {  
-                button1.setIcon(hoticon); // Êó±êµã»÷Ê±ÉèÖÃÍ¼±ê  
+                button1.setIcon(hoticon); // é¼ æ ‡ç‚¹å‡»æ—¶è®¾ç½®å›¾æ ‡  
             }  
   
             @Override  
             public void mouseReleased(MouseEvent e) {  
-                button1.setIcon(icon); // Êó±êÊÍ·ÅÊ±ÉèÖÃ»ØĞüÍ£Í¼±ê  
+                button1.setIcon(icon); // é¼ æ ‡é‡Šæ”¾æ—¶è®¾ç½®å›æ‚¬åœå›¾æ ‡  
             }  
             @Override  
             public void mouseEntered(MouseEvent e) {  
-                // Êó±ê½øÈë°´Å¥ÇøÓòÊ±£¬ÉèÖÃĞüÍ£×´Ì¬µÄÍ¼±ê  
+                // é¼ æ ‡è¿›å…¥æŒ‰é’®åŒºåŸŸæ—¶ï¼Œè®¾ç½®æ‚¬åœçŠ¶æ€çš„å›¾æ ‡  
                 button1.setIcon(hoticon);  
             }  
   
             @Override  
             public void mouseExited(MouseEvent e) {  
-                // Êó±êÀë¿ª°´Å¥ÇøÓòÊ±£¬ÉèÖÃÕı³£×´Ì¬µÄÍ¼±ê  
+                // é¼ æ ‡ç¦»å¼€æŒ‰é’®åŒºåŸŸæ—¶ï¼Œè®¾ç½®æ­£å¸¸çŠ¶æ€çš„å›¾æ ‡  
                 button1.setIcon(icon);  
             }  
         });  
@@ -154,7 +154,7 @@ public class GameView extends JPanel {
 			panel1.setBackground(Color.WHITE);
 			panel1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			for (int i = 0; i < column; i++) {
-				// ´´½¨Ò»¸öJLabelÀ´ÏÔÊ¾Í¼Æ¬
+				// åˆ›å»ºä¸€ä¸ªJLabelæ¥æ˜¾ç¤ºå›¾ç‰‡
 				JLabel label = new JLabel(icon);
 				label.setPreferredSize(new Dimension(57, 57));
 				ajl.add(label);
@@ -165,7 +165,7 @@ public class GameView extends JPanel {
 	public void init(int column) {
 		this.column = column;
 		this.setBackground(Color.WHITE);
-		// ´´½¨ FlowLayout ÊµÀı²¢ÉèÖÃË®Æ½ºÍ´¹Ö±¼ä¾à
+		// åˆ›å»º FlowLayout å®ä¾‹å¹¶è®¾ç½®æ°´å¹³å’Œå‚ç›´é—´è·
 		FlowLayout layout = new FlowLayout(FlowLayout.CENTER, 5, 0);
 		//tabbedPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT); 
 		JPanel panelts = new JPanel();
@@ -176,7 +176,7 @@ public class GameView extends JPanel {
 		panel.add(panelts);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		Dimension dbutton = new Dimension(55, 57);
-			// ¼ÓÔØÍ¼Æ¬
+			// åŠ è½½å›¾ç‰‡
 			ImageIcon icon = new ImageIcon("src/resource/1.png");
 			JPanel panelt = new JPanel();
 			panelt.setBackground(Color.WHITE);
@@ -186,7 +186,7 @@ public class GameView extends JPanel {
 				panel1.setBackground(Color.WHITE);
 				panel1.setLayout(layout);
 				for (int i = 0; i < column; i++) {
-					// ´´½¨Ò»¸öJLabelÀ´ÏÔÊ¾Í¼Æ¬
+					// åˆ›å»ºä¸€ä¸ªJLabelæ¥æ˜¾ç¤ºå›¾ç‰‡
 					JLabel label = new JLabel(icon);
 					label.setPreferredSize(dbutton);
 					ajl.add(label);
@@ -215,143 +215,143 @@ public class GameView extends JPanel {
 				
 			}
 			
-			// ¼ÓÔØ×Ô¶¨ÒåÍ¼Æ¬
+			// åŠ è½½è‡ªå®šä¹‰å›¾ç‰‡
 			ImageIcon icon1 = new ImageIcon("src/resource/number1.png");
 			ImageIcon hoticon1 = new ImageIcon("src/resource/hotnumber1.png");
-			// ´´½¨Ò»¸ö°´Å¥
+			// åˆ›å»ºä¸€ä¸ªæŒ‰é’®
 			creatButton(panel2, icon1,hoticon1,'1',dbutton);
-			// ¼ÓÔØ×Ô¶¨ÒåÍ¼Æ¬
+			// åŠ è½½è‡ªå®šä¹‰å›¾ç‰‡
 			ImageIcon icon2 = new ImageIcon("src/resource/number2.png");
 			ImageIcon hoticon2 = new ImageIcon("src/resource/hotnumber2.png");
-			// ´´½¨Ò»¸ö°´Å¥
+			// åˆ›å»ºä¸€ä¸ªæŒ‰é’®
 			creatButton(panel2, icon2,hoticon2,'2',dbutton);
-			// ¼ÓÔØ×Ô¶¨ÒåÍ¼Æ¬
+			// åŠ è½½è‡ªå®šä¹‰å›¾ç‰‡
 			ImageIcon icon3 = new ImageIcon("src/resource/number3.png");
 			ImageIcon hoticon3 = new ImageIcon("src/resource/hotnumber3.png");
-			// ´´½¨Ò»¸ö°´Å¥
+			// åˆ›å»ºä¸€ä¸ªæŒ‰é’®
 			creatButton(panel2, icon3,hoticon3,'3',dbutton);
-			// ¼ÓÔØ×Ô¶¨ÒåÍ¼Æ¬
+			// åŠ è½½è‡ªå®šä¹‰å›¾ç‰‡
 			ImageIcon icon4 = new ImageIcon("src/resource/number4.png");
 			ImageIcon hoticon4 = new ImageIcon("src/resource/hotnumber4.png");
-			// ´´½¨Ò»¸ö°´Å¥
+			// åˆ›å»ºä¸€ä¸ªæŒ‰é’®
 			creatButton(panel2, icon4,hoticon4,'4',dbutton);
-			// ¼ÓÔØ×Ô¶¨ÒåÍ¼Æ¬
+			// åŠ è½½è‡ªå®šä¹‰å›¾ç‰‡
 			ImageIcon icon5 = new ImageIcon("src/resource/number5.png");
 			ImageIcon hoticon5 = new ImageIcon("src/resource/hotnumber5.png");
 			creatButton(panel2, icon5,hoticon5,'5',dbutton);
-			// ¼ÓÔØ×Ô¶¨ÒåÍ¼Æ¬
+			// åŠ è½½è‡ªå®šä¹‰å›¾ç‰‡
 			ImageIcon icon6 = new ImageIcon("src/resource/number6.png");
 			ImageIcon hoticon6 = new ImageIcon("src/resource/hotnumber6.png");
 			creatButton(panel2, icon6,hoticon6,'6',dbutton);
-			// ¼ÓÔØ×Ô¶¨ÒåÍ¼Æ¬
+			// åŠ è½½è‡ªå®šä¹‰å›¾ç‰‡
 			ImageIcon icon7 = new ImageIcon("src/resource/number7.png");
 			ImageIcon hoticon7 = new ImageIcon("src/resource/hotnumber7.png");
 			creatButton(panel2, icon7,hoticon7,'7',dbutton);
-			// ¼ÓÔØ×Ô¶¨ÒåÍ¼Æ¬
+			// åŠ è½½è‡ªå®šä¹‰å›¾ç‰‡
 			ImageIcon icon8 = new ImageIcon("src/resource/number8.png");
 			ImageIcon hoticon8 = new ImageIcon("src/resource/hotnumber8.png");
 			creatButton(panel2, icon8,hoticon8,'8',dbutton);
-			// ¼ÓÔØ×Ô¶¨ÒåÍ¼Æ¬
+			// åŠ è½½è‡ªå®šä¹‰å›¾ç‰‡
 			ImageIcon icon9 = new ImageIcon("src/resource/number9.png");
 			ImageIcon hoticon9 = new ImageIcon("src/resource/hotnumber9.png");
 			creatButton(panel2, icon9,hoticon9,'9',dbutton);
-			// ¼ÓÔØ×Ô¶¨ÒåÍ¼Æ¬
+			// åŠ è½½è‡ªå®šä¹‰å›¾ç‰‡
 			ImageIcon icon0 = new ImageIcon("src/resource/number0.png");
 			ImageIcon hoticon0 = new ImageIcon("src/resource/hotnumber0.png");
-			// ´´½¨Ò»¸ö°´Å¥
+			// åˆ›å»ºä¸€ä¸ªæŒ‰é’®
 			creatButton(panel2, icon0,hoticon0,'0',dbutton);
 
 			JPanel panel3 = new JPanel();
 			panel3.setBackground(Color.WHITE);
 			panel3.setLayout(layout);
 			Dimension dbutton2 = new Dimension(118, 58);
-			// ´´½¨Ò»¸ö°´Å¥
+			// åˆ›å»ºä¸€ä¸ªæŒ‰é’®
 			JButton button11 = new JButton();
 			ImageIcon iconback = new ImageIcon("src/resource/back.png");
 			ImageIcon hoticonback = new ImageIcon("src/resource/hotback.png");
 			button11.setPreferredSize(dbutton2);
 			button11.setIcon(iconback);
-			button11.setBorderPainted(false); // ²»»æÖÆ°´Å¥±ß¿ò
-			button11.setContentAreaFilled(false); // ²»Ìî³ä°´Å¥ÄÚÈİÇøÓò±³¾°
+			button11.setBorderPainted(false); // ä¸ç»˜åˆ¶æŒ‰é’®è¾¹æ¡†
+			button11.setContentAreaFilled(false); // ä¸å¡«å……æŒ‰é’®å†…å®¹åŒºåŸŸèƒŒæ™¯
 			button11.addMouseListener(new MouseAdapter() {  
 	            @Override  
 	            public void mousePressed(MouseEvent e) {  
-	                button11.setIcon(hoticonback); // Êó±êµã»÷Ê±ÉèÖÃÍ¼±ê  
+	                button11.setIcon(hoticonback); // é¼ æ ‡ç‚¹å‡»æ—¶è®¾ç½®å›¾æ ‡  
 	            }  
 	  
 	            @Override  
 	            public void mouseReleased(MouseEvent e) {  
-	                button11.setIcon(iconback); // Êó±êÊÍ·ÅÊ±ÉèÖÃ»ØĞüÍ£Í¼±ê  
+	                button11.setIcon(iconback); // é¼ æ ‡é‡Šæ”¾æ—¶è®¾ç½®å›æ‚¬åœå›¾æ ‡  
 	            }  
 	            @Override  
 	            public void mouseEntered(MouseEvent e) {  
-	                // Êó±ê½øÈë°´Å¥ÇøÓòÊ±£¬ÉèÖÃĞüÍ£×´Ì¬µÄÍ¼±ê  
+	                // é¼ æ ‡è¿›å…¥æŒ‰é’®åŒºåŸŸæ—¶ï¼Œè®¾ç½®æ‚¬åœçŠ¶æ€çš„å›¾æ ‡  
 	                button11.setIcon(hoticonback);  
 	            }  
 	  
 	            @Override  
 	            public void mouseExited(MouseEvent e) {  
-	                // Êó±êÀë¿ª°´Å¥ÇøÓòÊ±£¬ÉèÖÃÕı³£×´Ì¬µÄÍ¼±ê  
+	                // é¼ æ ‡ç¦»å¼€æŒ‰é’®åŒºåŸŸæ—¶ï¼Œè®¾ç½®æ­£å¸¸çŠ¶æ€çš„å›¾æ ‡  
 	                button11.setIcon(iconback);  
 	            }  
 			});
-			panel3.add(button11); // ½«°´Å¥Ìí¼Óµ½Ãæ°åÖĞ
+			panel3.add(button11); // å°†æŒ‰é’®æ·»åŠ åˆ°é¢æ¿ä¸­
 			Command cback = new GameBackCommand(icon, ac);
 			ButtonListener bback = new ButtonListener(cback);
-			// Îª°´Å¥Ìí¼Óµã»÷ÊÂ¼ş¼àÌıÆ÷
+			// ä¸ºæŒ‰é’®æ·»åŠ ç‚¹å‡»äº‹ä»¶ç›‘å¬å™¨
 			button11.addActionListener(bback);
 			Dimension dbutton1 = new Dimension(64, 55);
-			// ´´½¨Ò»¸ö°´Å¥
+			// åˆ›å»ºä¸€ä¸ªæŒ‰é’®
 			ImageIcon iconsum = new ImageIcon("src/resource/sum.png");
 			ImageIcon hoticonsum = new ImageIcon("src/resource/hotsum.png");
 			creatButton(panel3, iconsum,hoticonsum,'+',dbutton1);
-			// ´´½¨Ò»¸ö°´Å¥
+			// åˆ›å»ºä¸€ä¸ªæŒ‰é’®
 			ImageIcon iconreduce = new ImageIcon("src/resource/reduce.png");
 			ImageIcon hoticonreduce = new ImageIcon("src/resource/hotreduce.png");
 			creatButton(panel3, iconreduce,hoticonreduce,'-',dbutton1);
-			// ´´½¨Ò»¸ö°´Å¥
+			// åˆ›å»ºä¸€ä¸ªæŒ‰é’®
 			ImageIcon iconride = new ImageIcon("src/resource/ride.png");
 			ImageIcon hoticonride = new ImageIcon("src/resource/hotride.png");
 			creatButton(panel3, iconride,hoticonride,'*',dbutton1);
-			// ´´½¨Ò»¸ö°´Å¥
+			// åˆ›å»ºä¸€ä¸ªæŒ‰é’®
 			ImageIcon iconexcept = new ImageIcon("src/resource/except.png");
 			ImageIcon hoticonexcept = new ImageIcon("src/resource/hotexcept.png");
 			creatButton(panel3, iconexcept,hoticonexcept,'/',dbutton1);
-			// ´´½¨Ò»¸ö°´Å¥
+			// åˆ›å»ºä¸€ä¸ªæŒ‰é’®
 			ImageIcon iconequal = new ImageIcon("src/resource/equal.png");
 			ImageIcon hoticonequal = new ImageIcon("src/resource/hotequal.png");
 			creatButton(panel3, iconequal,hoticonequal,'=',dbutton1);
-			// ´´½¨Ò»¸ö°´Å¥
+			// åˆ›å»ºä¸€ä¸ªæŒ‰é’®
 			JButton button17 = new JButton();
 			ImageIcon iconenter = new ImageIcon("src/resource/enter.png");
 			ImageIcon hoticonenter = new ImageIcon("src/resource/hotenter.png");
 			button17.setPreferredSize(dbutton2);
 			button17.setIcon(iconenter);
-			button17.setBorderPainted(false); // ²»»æÖÆ°´Å¥±ß¿ò
-			button17.setContentAreaFilled(false); // ²»Ìî³ä°´Å¥ÄÚÈİÇøÓò±³¾°
+			button17.setBorderPainted(false); // ä¸ç»˜åˆ¶æŒ‰é’®è¾¹æ¡†
+			button17.setContentAreaFilled(false); // ä¸å¡«å……æŒ‰é’®å†…å®¹åŒºåŸŸèƒŒæ™¯
 			button17.addMouseListener(new MouseAdapter() {  
 	            @Override  
 	            public void mousePressed(MouseEvent e) {  
-	                button17.setIcon(hoticonenter); // Êó±êµã»÷Ê±ÉèÖÃÍ¼±ê  
+	                button17.setIcon(hoticonenter); // é¼ æ ‡ç‚¹å‡»æ—¶è®¾ç½®å›¾æ ‡  
 	            }  
 	  
 	            @Override  
 	            public void mouseReleased(MouseEvent e) {  
-	                button17.setIcon(iconenter); // Êó±êÊÍ·ÅÊ±ÉèÖÃ»ØĞüÍ£Í¼±ê  
+	                button17.setIcon(iconenter); // é¼ æ ‡é‡Šæ”¾æ—¶è®¾ç½®å›æ‚¬åœå›¾æ ‡  
 	            }  
 	            @Override  
 	            public void mouseEntered(MouseEvent e) {  
-	                // Êó±ê½øÈë°´Å¥ÇøÓòÊ±£¬ÉèÖÃĞüÍ£×´Ì¬µÄÍ¼±ê  
+	                // é¼ æ ‡è¿›å…¥æŒ‰é’®åŒºåŸŸæ—¶ï¼Œè®¾ç½®æ‚¬åœçŠ¶æ€çš„å›¾æ ‡  
 	                button17.setIcon(hoticonenter);  
 	            }  
 	  
 	            @Override  
 	            public void mouseExited(MouseEvent e) {  
-	                // Êó±êÀë¿ª°´Å¥ÇøÓòÊ±£¬ÉèÖÃÕı³£×´Ì¬µÄÍ¼±ê  
+	                // é¼ æ ‡ç¦»å¼€æŒ‰é’®åŒºåŸŸæ—¶ï¼Œè®¾ç½®æ­£å¸¸çŠ¶æ€çš„å›¾æ ‡  
 	                button17.setIcon(iconenter);  
 	            }  
 			});
-			panel3.add(button17); // ½«°´Å¥Ìí¼Óµ½Ãæ°åÖĞ
+			panel3.add(button17); // å°†æŒ‰é’®æ·»åŠ åˆ°é¢æ¿ä¸­
 			Command center = new GameEnterCommand(ac);
 			ButtonListener benter = new ButtonListener(center);
 			button17.addActionListener(benter);
@@ -362,5 +362,8 @@ public class GameView extends JPanel {
 	}
 	public void prompt() {
 		JOptionPane.showMessageDialog(this, "Equation error!");
+	}
+	public void won() {
+		JOptionPane.showMessageDialog(this, "       ğŸ† win the game!");
 	}
 }

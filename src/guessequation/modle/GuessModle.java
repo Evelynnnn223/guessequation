@@ -64,11 +64,13 @@ public class GuessModle {
 		}
 		return temp;
 	}
-	public boolean legal(String str) {
+	public boolean legal(String str,int column) {
 		int sum = 0,upindex = 0,result = 0;
 		ArrayList<Character> slist = new ArrayList<>();
 		ArrayList<Integer> ilist = new ArrayList<>();
-		if(str.indexOf('=') == -1) {
+		
+		if(str.length() != column || str.indexOf('=') == -1||(str.indexOf('+') == -1&&str.indexOf('-') == -1
+				&&str.indexOf('*') == -1&&str.indexOf('/') == -1)) {
 			return false;
 		}
 		for(int i=0;i<str.length();i++) {
