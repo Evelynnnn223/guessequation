@@ -197,7 +197,9 @@ public class StatisticsView extends JPanel{
         if(percentage > 0) {
         	g2d.setColor(Color.WHITE); 
         	String sp = (int)percentage+"%";
-        	g2d.drawString(sp, x+pwidth-40, textY); 
+        	FontMetrics fmg = g2d.getFontMetrics();  
+            int textWidth = fmg.stringWidth(sp);  
+        	g2d.drawString(sp, x+pwidth-textWidth-10, textY); 
         }else {
         	String sp = (int)percentage+"%";
         	g2d.drawString(sp, x+10, textY); 
