@@ -2,7 +2,7 @@ package guessequation.modle;
 
 import java.util.ArrayList;
 
-public class StatisticsModle {
+public class StatisticsModle extends ModleSubject{
 	private int gamesPlayed=0;
 	private int gamesWon = 0;
 	private double percentageWin = 0;
@@ -19,6 +19,15 @@ public class StatisticsModle {
             dlist.add(0.0);
         }  
 	}
+	
+	public ArrayList<Double> getDlist() {
+		return dlist;
+	}
+
+	public void setDlist(ArrayList<Double> dlist) {
+		this.dlist = dlist;
+	}
+
 	public void setList(int index,int value) {
 		tlist.set(index, value);
 	}

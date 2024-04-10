@@ -85,11 +85,13 @@ public class GameView extends JPanel {
 		JLabel jl = ajl.get(this.line * column + this.index);
 		jl.setIcon(icon);
 	}
-	public void forward(ImageIcon icon) {
+	public boolean forward(ImageIcon icon) {
 		if (this.index < column) {
 			switchImage(icon);
 			this.index++;
+			return true;
 		}
+		return false;
 	}
 	public void backward(ImageIcon icon) {
 		if (index > 0) {

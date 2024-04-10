@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 
 import guessequation.modle.GuessModle;
@@ -17,7 +18,6 @@ public class GameController {
 	private GameView view;
 	private GuessModle modle;
 	private StatisticsModle smodle;
-	private StatisticsController sc;
 	public GameController(GameView view,GuessModle modle,StatisticsModle smodle) {
 		this.view = view;
 		this.modle = modle;
@@ -101,6 +101,7 @@ public class GameController {
 					smodle.addGamesWon();
 					smodle.setPercentageWin((smodle.getGamesWon()*1.0/smodle.getGamesPlayed())*100);
 					smodle.setBestTry(view.getColumn());
+					smodle.notifyObservers();
 					smodle.initCorrectNumberList();
 				}else if(greenSum != relist.size() && view.getLine() >= 6) {
 					view.fail(); 
@@ -108,6 +109,7 @@ public class GameController {
 					smodle.addGamesPlayed();
 					smodle.setPercentageWin((smodle.getGamesWon()*1.0/smodle.getGamesPlayed())*100);
 					smodle.setBestTry(view.getColumn());
+					smodle.notifyObservers();
 					smodle.initCorrectNumberList();
 				}
 			}
@@ -118,12 +120,24 @@ public class GameController {
 	public void clearList() {
 		list.clear();
 	}
-	public void add(char str) {
-		list.add(str);
+	public void add(char str,ImageIcon icon) {
+		if(view.forward(icon)) {
+			list.add(str);
+		}
 	}
-	public void remove() {
+	public void remove(ImageIcon icon) {
 		if(!list.isEmpty()) {
 			list.remove(list.size()-1);
+			view.backward(icon);
 		}
+	}
+	public void prompt() {
+		view.prompt();
+	}
+	public void initGrid(int column) {
+		view.initGrid(column);
+	}
+	public int getViewColumn() {
+		return view.getColumn();
 	}
 }

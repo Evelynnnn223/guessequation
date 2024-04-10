@@ -10,6 +10,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -28,11 +29,13 @@ public class StatisticsView extends JPanel{
 	private Graphics2D g2d = image.createGraphics();  
 	private Color greyColor = Color.decode("#e7ebf2");
 	private Color greenColor = Color.decode("#2fc1a5");
+	private ArrayList<Integer> list;
+	private ArrayList<Double> dlist;
 	private BufferedImage imageTitli; 
 	private int column;
 	private int gamesPlayed=0;
 	private int gamesWon = 0;
-	private int percentageWin = 0;
+	private double percentageWin = 0;
 	private int bestTry = 0;
 	private int currentStreak = 0;
 	private int maxStreak = 0;
@@ -49,7 +52,20 @@ public class StatisticsView extends JPanel{
 	public int getColumn() {
 		return column;
 	}
-
+	
+	public ArrayList<Integer> getList() {
+		return list;
+	}
+	public void setList(ArrayList<Integer> list) {
+		this.list = list;
+	}
+	
+	public ArrayList<Double> getDlist() {
+		return dlist;
+	}
+	public void setDlist(ArrayList<Double> dlist) {
+		this.dlist = dlist;
+	}
 	public void setColumn(int column) {
 		this.column = column;
 	}
@@ -57,61 +73,61 @@ public class StatisticsView extends JPanel{
 	public void setSc(StatisticsController sc) {
 		this.sc = sc;
 	}
-	//	
-//	public void setImage(BufferedImage image) {
-//		this.image = image;
-//		repaint();
-//	}
-//
-//	public void setG2d(Graphics2D g2d) {
-//		this.g2d = g2d;
-//		repaint();
-//	}
-//
-//	public void setGreyColor(Color greyColor) {
-//		this.greyColor = greyColor;
-//		repaint();
-//	}
-//
-//	public void setGreenColor(Color greenColor) {
-//		this.greenColor = greenColor;
-//		repaint();
-//	}
-//
-//	public void setImageTitli(BufferedImage imageTitli) {
-//		this.imageTitli = imageTitli;
-//		repaint();
-//	}
-//
-//	public void setGamesPlayed(int gamesPlayed) {
-//		this.gamesPlayed = gamesPlayed;
-//		repaint();
-//	}
-//
-//	public void setGamesWon(int gamesWon) {
-//		this.gamesWon = gamesWon;
-//		repaint();
-//	}
-//
-//	public void setPercentageWin(int percentageWin) {
-//		this.percentageWin = percentageWin;
-//		repaint();
-//	}
-//
-//	public void setBestTry(int bestTry) {
-//		this.bestTry = bestTry;
-//		repaint();
-//	}
-//
-//	public void setCurrentStreak(int currentStreak) {
-//		this.currentStreak = currentStreak;
-//		repaint();
-//	}
-//
-//	public void setMaxStreak(int maxStreak) {
-//		this.maxStreak = maxStreak;
-//		repaint();
-//	}
+		
+	public void setImage(BufferedImage image) {
+		this.image = image;
+		repaint();
+	}
+
+	public void setG2d(Graphics2D g2d) {
+		this.g2d = g2d;
+		repaint();
+	}
+
+	public void setGreyColor(Color greyColor) {
+		this.greyColor = greyColor;
+		repaint();
+	}
+
+	public void setGreenColor(Color greenColor) {
+		this.greenColor = greenColor;
+		repaint();
+	}
+
+	public void setImageTitli(BufferedImage imageTitli) {
+		this.imageTitli = imageTitli;
+		repaint();
+	}
+
+	public void setGamesPlayed(int gamesPlayed) {
+		this.gamesPlayed = gamesPlayed;
+		repaint();
+	}
+
+	public void setGamesWon(int gamesWon) {
+		this.gamesWon = gamesWon;
+		repaint();
+	}
+
+	public void setPercentageWin(double percentageWin) {
+		this.percentageWin = percentageWin;
+		repaint();
+	}
+
+	public void setBestTry(int bestTry) {
+		this.bestTry = bestTry;
+		repaint();
+	}
+
+	public void setCurrentStreak(int currentStreak) {
+		this.currentStreak = currentStreak;
+		repaint();
+	}
+
+	public void setMaxStreak(int maxStreak) {
+		this.maxStreak = maxStreak;
+		repaint();
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -150,22 +166,36 @@ public class StatisticsView extends JPanel{
         
         g2d.drawString(str, textX1, textY1);  
 	}
+
 	@Override  
     protected void paintComponent(Graphics g) {  
         super.paintComponent(g);  
-        drawNum(g,70,50,"Games Played",sc.getGamesPlayed());
-        drawNum(g,290,50,"Games Won",sc.getGamesWon());
-        drawNum(g,510,50,"% of Wins",(int)sc.getPercentageWin());
-        drawNum(g,70,170,"Best Try",sc.getBestTry());
-        drawNum(g,290,170,"Current Streak",sc.getCurrentStreak());
-        drawNum(g,510,170,"Max Streak",sc.getMaxStreak());
+//        drawNum(g,70,50,"Games Played",sc.getGamesPlayed());
+//        drawNum(g,290,50,"Games Won",sc.getGamesWon());
+//        drawNum(g,510,50,"% of Wins",(int)sc.getPercentageWin());
+//        drawNum(g,70,170,"Best Try",sc.getBestTry());
+//        drawNum(g,290,170,"Current Streak",sc.getCurrentStreak());
+//        drawNum(g,510,170,"Max Streak",sc.getMaxStreak());
+//        g.drawImage(imageTitli, 284, 290, this);
+//        drawBarChart(g,100,362,1,sc.getCorrectNumber(0),sc.getAccuracy(0));
+//        drawBarChart(g,100,397,2,sc.getCorrectNumber(1),sc.getAccuracy(1));
+//        drawBarChart(g,100,432,3,sc.getCorrectNumber(2),sc.getAccuracy(2));
+//        drawBarChart(g,100,467,4,sc.getCorrectNumber(3),sc.getAccuracy(3));
+//        drawBarChart(g,100,502,5,sc.getCorrectNumber(4),sc.getAccuracy(4));
+//        drawBarChart(g,100,537,6,sc.getCorrectNumber(5),sc.getAccuracy(5));
+        drawNum(g,70,50,"Games Played",gamesPlayed);
+        drawNum(g,290,50,"Games Won",gamesWon);
+        drawNum(g,510,50,"% of Wins",(int)percentageWin);
+        drawNum(g,70,170,"Best Try",bestTry);
+        drawNum(g,290,170,"Current Streak",currentStreak);
+        drawNum(g,510,170,"Max Streak",maxStreak);
         g.drawImage(imageTitli, 284, 290, this);
-        drawBarChart(g,100,362,1,sc.getCorrectNumber(0),sc.getAccuracy(0));
-        drawBarChart(g,100,397,2,sc.getCorrectNumber(1),sc.getAccuracy(1));
-        drawBarChart(g,100,432,3,sc.getCorrectNumber(2),sc.getAccuracy(2));
-        drawBarChart(g,100,467,4,sc.getCorrectNumber(3),sc.getAccuracy(3));
-        drawBarChart(g,100,502,5,sc.getCorrectNumber(4),sc.getAccuracy(4));
-        drawBarChart(g,100,537,6,sc.getCorrectNumber(5),sc.getAccuracy(5));
+        drawBarChart(g,100,362,1,list.get(0),dlist.get(0));
+        drawBarChart(g,100,397,2,list.get(1),dlist.get(1));
+        drawBarChart(g,100,432,3,list.get(2),dlist.get(2));
+        drawBarChart(g,100,467,4,list.get(3),dlist.get(3));
+        drawBarChart(g,100,502,5,list.get(4),dlist.get(4));
+        drawBarChart(g,100,537,6,list.get(5),dlist.get(5));
     }  
 	public void drawBarChart(Graphics g,int x,int y,int num,int quantity,double percentage) {
 		Graphics2D g2d = (Graphics2D) g;
@@ -182,7 +212,7 @@ public class StatisticsView extends JPanel{
         int textY = y + ((height - fm.getHeight()) / 2) + fm.getAscent();
         g2d.drawString(str1, x-30, textY);  
         // 创建一个具有圆弧边的矩形  
-        int pwidth = (int) (width*percentage/100);
+        int pwidth = (int) (width*percentage);
         RoundRectangle2D rect = new RoundRectangle2D.Double(x, y, width, height, arcWidth, arcHeight);  
         RoundRectangle2D grect = new RoundRectangle2D.Double(x, y, pwidth, height, arcWidth, arcHeight);  
         // 设置填充颜色为浅灰色  
@@ -194,14 +224,14 @@ public class StatisticsView extends JPanel{
         g2d.drawString(String.valueOf(quantity), x+width+10, textY); 
         Font gfont = new Font("微软雅黑", Font.BOLD, 14);  
         g2d.setFont(gfont);  
-        if(percentage > 0) {
+        if(percentage*100 > 0) {
         	g2d.setColor(Color.WHITE); 
-        	String sp = (int)percentage+"%";
+        	String sp = (int)(percentage*100)+"%";
         	FontMetrics fmg = g2d.getFontMetrics();  
             int textWidth = fmg.stringWidth(sp);  
         	g2d.drawString(sp, x+pwidth-textWidth-10, textY); 
         }else {
-        	String sp = (int)percentage+"%";
+        	String sp = (int)(percentage*100)+"%";
         	g2d.drawString(sp, x+10, textY); 
         }
         

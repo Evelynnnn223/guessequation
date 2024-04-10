@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import guessequation.controller.GameController;
+import guessequation.controller.SetController;
 import guessequation.controller.StatisticsController;
 import guessequation.modle.GuessModle;
 import guessequation.modle.StatisticsModle;
@@ -379,14 +380,16 @@ public class View {
 		StatisticsView stv = new StatisticsView();
 		StatisticsModle smodle = new StatisticsModle();
 		StatisticsController sc = new StatisticsController(smodle, stv);
+		smodle.addObserver(sc);
+		smodle.notifyObservers();
 		stv.setSc(sc);
 		stv.setColumn(gv.getColumn());
 		GuessModle gm = new GuessModle();
 		GameController gc = new GameController(gv, gm,smodle);
 		MainView mv = new MainView(gm, gc);
-		ac.setGv(gv);
-		ac.setSv(sv);
-		ac.setView(mv);
+		SetController sec = new SetController(gm, sv);
+		ac.setGc(gc);;
+		ac.setSc(sec);
 		ac.setStv(stv);
 		gm.init(1);
 		ImageIcon tab1Icon = new ImageIcon("src/resource/n+.png");

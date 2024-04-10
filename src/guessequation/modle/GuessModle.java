@@ -142,7 +142,7 @@ public class GuessModle {
 						lsum = sum;
 						startIndex = i+1;
 						if(startIndex >= slist.size()) {
-							rsum = ilist.get(index);
+							sum = ilist.get(index);
 							index++;
 						}
 						break;

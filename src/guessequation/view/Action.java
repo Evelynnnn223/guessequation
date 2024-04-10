@@ -4,61 +4,51 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import guessequation.controller.GameController;
+import guessequation.controller.SetController;
+import guessequation.controller.StatisticsController;
 
 public class Action {
-
-	private GameView gv;
-	private MainView view;
-	private SetView sv;
+	private GameController gc;
+	private SetController sc;
 	private StatisticsView stv;
 	
-	public Action() {
-		super();
-	}
-	
-	public void setGv(GameView gv) {
-		this.gv = gv;
+	public void setGc(GameController gc) {
+		this.gc = gc;
 	}
 
-	public void setView(MainView view) {
-		this.view = view;
-	}
-
-	public void setSv(SetView sv) {
-		this.sv = sv;
+	public void setSc(SetController sc) {
+		this.sc = sc;
 	}
 
 	public void setStv(StatisticsView stv) {
 		this.stv = stv;
 	}
 
+	public Action() {
+		super();
+	}
+
 	public void enter() {
-		GameController gc = view.getGuessController();
-		if(gc.legal(gv.getColumn())) {
+		if(gc.legal(gc.getViewColumn())) {
 			gc.guess();
 		}else {
-			gv.prompt();
+			gc.prompt();
 		}
 	}
 	public void symbol(ImageIcon icon,char str) {
-		GameController gc = view.getGuessController();
-		gv.forward(icon);
-		gc.add(str);
+		gc.add(str,icon);
 	}
 	
 	public void backward(ImageIcon icon) {
-		GameController gc = view.getGuessController();
-		gv.backward(icon);
-		gc.remove();
+		gc.remove(icon);
 	}
 	public void groove(int num,JButton button1) {
-		sv.updateSetNum(num,button1);
-		GameController gc = view.getGuessController();
-		gv.initGrid(num);
+		sc.updateSetNum(num,button1);
+		gc.initGrid(num);
 		gc.clearList();
 		stv.setColumn(num);
 	}
 	public void arithmetic(int c,JButton button1) {
-		sv.updateSetAirth(c, button1);
+		sc.updateSetAirth(c, button1);
 	}
 }
