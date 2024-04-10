@@ -9,8 +9,8 @@ import java.util.Random;
 
 public class GuessModle extends ModleSubject{
 	private String equation;
-	private boolean displayError = true;
-	private boolean displayEquation;
+	private boolean displayError = false;
+	private boolean displayEquation = false;
 	private boolean randomEquation = true;
 	private ArrayList<Character> nosylsit = new ArrayList<Character>();
 	private ArrayList<ArrayList<String>> equationList = new ArrayList<ArrayList<String>>();
