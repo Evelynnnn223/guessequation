@@ -65,7 +65,7 @@ public class GuessModle {
 		return temp;
 	}
 	public boolean legal(String str,int column) {
-		int sum = 0,upindex = 0,result = 0;
+		int lsum = 0,upindex = 0,rsum = 0;
 		ArrayList<Character> slist = new ArrayList<>();
 		ArrayList<Integer> ilist = new ArrayList<>();
 		
@@ -95,42 +95,68 @@ public class GuessModle {
 					ilist.add(Integer.valueOf(str.substring(upindex, i)));
 				upindex = i+1;
 			}else if(str.charAt(i) == '=') {
+				slist.add('=');
 				if(upindex != i)
 					ilist.add(Integer.valueOf(str.substring(upindex, i)));
 				upindex = i+1;
+			}else if(i == str.length()-1) {
+				ilist.add(Integer.valueOf(str.substring(i)));
 			}
 		}
-		if(upindex < str.length())
-			result = Integer.valueOf(str.substring(upindex));
+//		if(upindex < str.length())
+//			result = Integer.valueOf(str.substring(upindex));
 		if(slist.size() + 1 != ilist.size()) {
 			return false;
 		}
-		int index = 2;
-		for(int i=0;i<slist.size();i++) {
-			if(i == 0) {
-				if(slist.get(0) == '+') {
-					sum = ilist.get(0)+ilist.get(1);
-				}else if(slist.get(0) == '-') {
-					sum = ilist.get(0)-ilist.get(1);
-				}else if(slist.get(0) == '*') {
-					sum = ilist.get(0)*ilist.get(1);
-				}else if(slist.get(0) == '/') {
-					sum = ilist.get(0)/ilist.get(1);
+		int index = 0;
+		int startIndex = 0;
+		while(true) {
+			int sum = 0;
+			for(int i=startIndex;i<slist.size();i++) {
+				if(i == startIndex && i<slist.size()) {
+					if(slist.get(startIndex) == '+') {
+						sum = ilist.get(index)+ilist.get(index+1);
+					}else if(slist.get(startIndex) == '-') {
+						sum = ilist.get(index)-ilist.get(index+1);
+					}else if(slist.get(startIndex) == '*') {
+						sum = ilist.get(index)*ilist.get(index+1);
+					}else if(slist.get(startIndex) == '/') {
+						sum = ilist.get(index)/ilist.get(index+1);
+					}else if(slist.get(startIndex) == '=') {
+						lsum = ilist.get(index);
+						startIndex = i+1;
+						index++;
+						break;
+					}
+					index = index+2;
+				}else {
+					if(slist.get(i) == '+') {
+						sum += ilist.get(index);
+					}else if(slist.get(i) == '-') {
+						sum -= ilist.get(index);
+					}else if(slist.get(i) == '*') {
+						sum *= ilist.get(index);
+					}else if(slist.get(i) == '/') {
+						sum /= ilist.get(index);
+					}else if(slist.get(i) == '=') {
+						lsum = sum;
+						startIndex = i+1;
+						if(startIndex >= slist.size()) {
+							rsum = ilist.get(index);
+							index++;
+						}
+						break;
+					}
+					index++;
 				}
-			}else {
-				if(slist.get(i) == '+') {
-					sum += ilist.get(index);
-				}else if(slist.get(i) == '-') {
-					sum -= ilist.get(index);
-				}else if(slist.get(i) == '*') {
-					sum *= ilist.get(index);
-				}else if(slist.get(i) == '/') {
-					sum /= ilist.get(index);
-				}
-				index++;
+			}
+			if(index >= ilist.size()) {
+				rsum = sum;
+				break;
 			}
 		}
-		if(sum == result) {
+		
+		if(lsum == rsum) {
 			return true;
 		}else {
 			return false;
