@@ -1,5 +1,9 @@
 package guessequation.modle;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -7,11 +11,89 @@ public class GuessModle extends ModleSubject{
 	private String equation;
 	private boolean displayError = true;
 	private boolean displayEquation;
-	private boolean randomEquation;
-	public void creatEquation(int size) {
-		equation = "1+2=3";
+	private boolean randomEquation = true;
+	private ArrayList<Character> nosylsit = new ArrayList<Character>();
+	private ArrayList<ArrayList<String>> equationList = new ArrayList<ArrayList<String>>();
+	private File file = new File("src/resource/equations.txt");  
+	private int column;
+	public void init() {
+		for(int i=5;i<=12;i++) {
+			equationList.add(new ArrayList<String>());
+        }
+		loadFile();
+		setEquation();
 	}
 	
+	public int getColumn() {
+		return column;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
+	}
+
+	public void addNosylsit(char sym) {
+		nosylsit.add(sym);
+	}
+	public void removeNosylsit(Character sym) {
+		nosylsit.remove(sym);
+	}
+	public void setEquation() {
+		equation = loadEquation();
+	}
+	
+	public String loadEquation() {
+        int index = 0;  
+        ArrayList<String> list = equationList.get(column-5);
+        if(randomEquation) {
+        	Random rand = new Random();
+        	index = rand.nextInt(list.size());
+        }
+        
+        for(int i = index;;) {
+        	String line = list.get(i);
+        	boolean bnosy = true;
+        	for(int j=0;j<nosylsit.size();j++) {
+        		if(line.indexOf(nosylsit.get(j)) != -1) {
+        			bnosy = false;
+        			break;
+        		}
+        	}
+        	if(bnosy) {
+            	return line;
+        	}
+        	i++;
+        	if(i == list.size()) {
+        		i = 0;
+        	}
+        	if(i == index) {
+        		return "There is no equation that meets the requirements";
+        	}
+        }
+	}
+	
+	public void loadFile() {
+        BufferedReader reader = null;  
+        try {  
+            reader = new BufferedReader(new FileReader(file));  
+            String line = null;  
+            while ((line = reader.readLine()) != null) { 
+            	if(line.length() < 13) {
+            		equationList.get(line.length()-5).add(line);
+            	}
+            }  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        } finally {  
+            try {  
+                if (reader != null) {  
+                    reader.close();  
+                }  
+            } catch (IOException e) {  
+                e.printStackTrace();  
+            }  
+        }  
+	}
 	public String getEquation() {
 		if(displayEquation) {
 			return "Now Equation:"+this.equation;
@@ -152,7 +234,7 @@ public class GuessModle extends ModleSubject{
 					ilist.add(Integer.valueOf(str.substring(upindex, i)));
 				upindex = i+1;
 			}else if(i == str.length()-1) {
-				ilist.add(Integer.valueOf(str.substring(i)));
+				ilist.add(Integer.valueOf(str.substring(upindex)));
 			}
 		}
 //		if(upindex < str.length())
@@ -283,11 +365,12 @@ public class GuessModle extends ModleSubject{
 		String sline = equation;
 		for(int i = 0;i<inlist.size();i++) {
 			int rec = sline.indexOf(inlist.get(i));
+			boolean nowIndex = inlist.get(i) == sline.charAt(i);
 			if(rec == -1) {
 				relist.add(0);
-			}else if(rec == i) {
+			}else if(nowIndex) {
 				relist.add(1);
-			}else {
+			}else if(rec != 1 && !nowIndex){
 				relist.add(2);
 			}
 		}

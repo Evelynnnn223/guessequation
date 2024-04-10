@@ -39,7 +39,6 @@ public class StatisticsView extends JPanel{
 	private int bestTry = 0;
 	private int currentStreak = 0;
 	private int maxStreak = 0;
-	private StatisticsController sc;
 	public StatisticsView() {
 		init();
 	}
@@ -69,11 +68,7 @@ public class StatisticsView extends JPanel{
 	public void setColumn(int column) {
 		this.column = column;
 	}
-	
-	public void setSc(StatisticsController sc) {
-		this.sc = sc;
-	}
-		
+
 	public void setImage(BufferedImage image) {
 		this.image = image;
 		repaint();

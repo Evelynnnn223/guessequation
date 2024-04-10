@@ -107,6 +107,9 @@ public class GameController implements ControllerObserver{
 					smodle.setBestTry(view.getColumn());
 					smodle.notifyObservers();
 					smodle.initCorrectNumberList();
+					modle.setColumn(view.getColumn());
+					modle.setEquation();
+					modle.notifyObservers();
 				}else if(greenSum != relist.size() && view.getLine() >= 6) {
 					view.fail(); 
 					view.initGrid(view.getColumn());	
@@ -115,6 +118,9 @@ public class GameController implements ControllerObserver{
 					smodle.setBestTry(view.getColumn());
 					smodle.notifyObservers();
 					smodle.initCorrectNumberList();
+					modle.setColumn(view.getColumn());
+					modle.setEquation();
+					modle.notifyObservers();
 				}
 			}
 			
@@ -140,6 +146,9 @@ public class GameController implements ControllerObserver{
 	}
 	public void initGrid(int column) {
 		view.initGrid(column);
+		modle.setColumn(view.getColumn());
+		modle.setEquation();
+		modle.notifyObservers();
 	}
 	public int getViewColumn() {
 		return view.getColumn();

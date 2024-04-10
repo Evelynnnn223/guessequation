@@ -41,15 +41,18 @@ public class SetView extends JPanel {
 	public ArrayList<Integer> getSetbut2() {
 		return setbut2;
 	}
-	public void updateSetAirth(int c,JButton button1) {
+	
+	public boolean updateSetAirth(int c,JButton button1) {
 		if(setbut2.get(c-13) == 1 && setbut2.stream().filter(v -> v == 1).count() > 1) {
 			ImageIcon icon = new ImageIcon("src/resource/set"+c+".png");
 			button1.setIcon(icon);
 			setbut2.set(c-13, 0);
+			return false;
 		}else {
 			ImageIcon icon1 = new ImageIcon("src/resource/setgreen"+c+".png");
 			button1.setIcon(icon1);
 			setbut2.set(c-13, 1);
+			return true;
 		}
 	}
 	public void updateSetNum(int num,JButton button1) {

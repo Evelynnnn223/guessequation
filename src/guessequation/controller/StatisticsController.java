@@ -12,7 +12,9 @@ public class StatisticsController implements ControllerObserver{
 		this.smodle = smodle;
 		this.sv = sv;
 	}
-	
+	public void setColumn(int column) {
+		sv.setColumn(column);;
+	}
 //	public int getGamesPlayed() {
 //		return smodle.getGamesPlayed();
 //	}

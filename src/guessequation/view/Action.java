@@ -10,7 +10,7 @@ import guessequation.controller.StatisticsController;
 public class Action {
 	private GameController gc;
 	private SetController sc;
-	private StatisticsView stv;
+	private StatisticsController stc;
 
 	public void setGc(GameController gc) {
 		this.gc = gc;
@@ -19,9 +19,10 @@ public class Action {
 	public void setSc(SetController sc) {
 		this.sc = sc;
 	}
+	
 
-	public void setStv(StatisticsView stv) {
-		this.stv = stv;
+	public void setStc(StatisticsController stc) {
+		this.stc = stc;
 	}
 
 	public Action() {
@@ -44,7 +45,7 @@ public class Action {
 		sc.updateSetNum(num,button1);
 		gc.initGrid(num);
 		gc.clearList();
-		stv.setColumn(num);
+		stc.setColumn(num);
 	}
 	public void arithmetic(int c,JButton button1) {
 		sc.updateSetAirth(c, button1);
