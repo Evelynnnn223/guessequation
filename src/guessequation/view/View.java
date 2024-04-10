@@ -386,12 +386,14 @@ public class View {
 		stv.setColumn(gv.getColumn());
 		GuessModle gm = new GuessModle();
 		GameController gc = new GameController(gv, gm,smodle);
+		gm.creatEquation(1);
+		gm.addObserver(gc);
+		gm.notifyObservers();
 		MainView mv = new MainView(gm, gc);
 		SetController sec = new SetController(gm, sv);
-		ac.setGc(gc);;
+		ac.setGc(gc);
 		ac.setSc(sec);
 		ac.setStv(stv);
-		gm.init(1);
 		ImageIcon tab1Icon = new ImageIcon("src/resource/n+.png");
 		ImageIcon tab2Icon = new ImageIcon("src/resource/statistics.png");
 		ImageIcon tab3Icon = new ImageIcon("src/resource/set.png");

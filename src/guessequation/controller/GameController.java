@@ -12,7 +12,7 @@ import guessequation.modle.StatisticsModle;
 import guessequation.view.GameView;
 import guessequation.view.View;
 
-public class GameController {
+public class GameController implements ControllerObserver{
 	private ArrayList<Character> list = new ArrayList<>();
 	private HashMap<Character,Integer> map = new HashMap<Character,Integer>();
 	private GameView view;
@@ -40,9 +40,13 @@ public class GameController {
 	}
 	public boolean legal(int column) {
 		String re1 =modle.getEquation(list);
-		if(modle.legal(re1,column)) {
+		String rec = modle.legal(re1,column);
+		if(rec.equals("OK")) {
 			return true;
 		}else {
+			if(modle.isDisplayError()) {
+				prompt(rec);
+			}
 			return false;
 		}
 	}
@@ -131,13 +135,18 @@ public class GameController {
 			view.backward(icon);
 		}
 	}
-	public void prompt() {
-		view.prompt();
+	public void prompt(String str) {
+		view.prompt(str);
 	}
 	public void initGrid(int column) {
 		view.initGrid(column);
 	}
 	public int getViewColumn() {
 		return view.getColumn();
+	}
+	@Override
+	public void updata() {
+		// TODO 自动生成的方法存根
+		view.displayEquation(modle.getEquation());
 	}
 }

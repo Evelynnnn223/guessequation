@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -44,6 +45,7 @@ public class GameView extends JPanel {
 	private int index = 0;// 当前操作的数字位置
 	private int line = 0;// 当前操作的数字位置
 	private int column;
+	private JPanel ptext = new JPanel();
 	public GameView(int num,Action ac) {
 		this.ac = ac;
 		init(num);
@@ -164,6 +166,16 @@ public class GameView extends JPanel {
 			}
 		}
 	}
+	
+	public void displayEquation(String equation) {
+		ptext.removeAll();
+		Font font1 = new Font("微软雅黑", Font.BOLD, 20);  
+		JLabel label1 = new JLabel(equation);  
+		label1.setFont(font1);
+		ptext.setBackground(Color.WHITE);
+		ptext.add(label1);
+	}
+	
 	public void init(int column) {
 		this.column = column;
 		this.setBackground(Color.WHITE);
@@ -360,15 +372,16 @@ public class GameView extends JPanel {
 			panel.add(panel2);
 			panel.add(panel3);
 			this.add(panel);
+			this.add(ptext);
 			initGrid(column);
 	}
-	public void prompt() {
-		JOptionPane.showMessageDialog(this, "Equation error!");
+	public void prompt(String str) {
+		JOptionPane.showMessageDialog(this, str);
 	}
 	public void won() {
-		JOptionPane.showMessageDialog(this, "       🏆 win the game!");
+		prompt("       🏆 win the game!");
 	}
 	public void fail() {
-		JOptionPane.showMessageDialog(this, "       fail the game!");
+		prompt("       fail the game!");
 	}
 }

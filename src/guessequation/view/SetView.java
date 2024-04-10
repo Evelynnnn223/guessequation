@@ -4,7 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -20,6 +24,8 @@ public class SetView extends JPanel {
 	private static final long serialVersionUID = 4083200629505710917L;
 	private ArrayList<JButton> setbut1 = new ArrayList<JButton>();
 	private ArrayList<Integer> setbut2 = new ArrayList<Integer>();
+//	private ArrayList<Integer> setbut3 = new ArrayList<Integer>();
+	private HashMap<Integer,JButton> map = new HashMap<Integer,JButton>();
 	private Action ac;
 	public SetView(int num,Action ac) {
 		this.ac = ac;
@@ -54,6 +60,53 @@ public class SetView extends JPanel {
 		}
 		ImageIcon icon1 = new ImageIcon("src/resource/setgreen"+num+".png");
 		button1.setIcon(icon1);
+	}
+	public void creatButton(JPanel panel,String str,Command command,int num) {
+		JPanel setnumpanel3= new JPanel();
+		FlowLayout blayout = new FlowLayout(FlowLayout.CENTER, 150, 5);
+		setnumpanel3.setLayout(blayout);
+		setnumpanel3.setBackground(Color.WHITE);
+		Font font1 = new Font("微软雅黑", Font.BOLD, 20);  
+		JLabel label1 = new JLabel(str);  
+		label1.setFont(font1);
+		JPanel ptext= new JPanel();
+		ptext.setLayout(new FlowLayout(FlowLayout.LEFT));
+		ptext.setBackground(Color.WHITE);
+		ptext.setPreferredSize(new Dimension(200, 40)); 
+		ptext.add(label1);
+		setnumpanel3.add(ptext);
+		JButton dbutton1 = new JButton();
+		dbutton1.setPreferredSize(new Dimension(50, 26));
+		dbutton1.setBorderPainted(false); // 不绘制按钮边框
+		dbutton1.setContentAreaFilled(false); // 不填充按钮内容区域背景
+//		dbutton1.addMouseListener(new MouseAdapter() {  
+//            @Override  
+//            public void mousePressed(MouseEvent e) {  
+//            	if(setbut3.get(num) == 0) {
+//            		dbutton1.setIcon(dicon2); // 鼠标点击时设置图标  
+//            		setbut3.set(num, 1);
+//            	}else {
+//            		dbutton1.setIcon(dicon1); // 鼠标点击时设置图标  
+//            		setbut3.set(num, 0);
+//            	}
+//            }  
+//		});
+		ButtonListener bl = new ButtonListener(command);
+		// 为按钮添加点击事件监听器
+		dbutton1.addActionListener(bl);
+		map.put(num, dbutton1);
+		setnumpanel3.add(dbutton1); // 将按钮添加到面板中
+		panel.add(setnumpanel3);
+	}
+	public void setOffOn(int num,boolean v) {
+		JButton button = map.get(num);
+		ImageIcon dicon1 = new ImageIcon("src/resource/OFF.png");
+		ImageIcon dicon2 = new ImageIcon("src/resource/ON.png");
+		if(v) {
+    		button.setIcon(dicon2); // 鼠标点击时设置图标  
+    	}else {
+    		button.setIcon(dicon1); // 鼠标点击时设置图标  
+    	}
 	}
 	public void init(int column) {
 		this.setBackground(Color.WHITE);
@@ -121,6 +174,36 @@ public class SetView extends JPanel {
 			button1.addActionListener(barithmentic);
 		}
 		panel_2.add(setnumpanel2);
+		Command dpcommand = new DisplayErrorCommand(ac);
+		creatButton(panel_2,"Display Error",dpcommand,0);
+		Command decommand = new DisplayEquationCommand(ac);
+		creatButton(panel_2,"Display Equation",decommand,1);
+		Command recommand = new RandomEquationCommand(ac);
+		creatButton(panel_2,"Random Equation",recommand,2);
+//		JPanel setnumpanel3= new JPanel();
+//		FlowLayout blayout = new FlowLayout(FlowLayout.CENTER, 150, 5);
+//		setnumpanel3.setLayout(blayout);
+//		setnumpanel3.setBackground(Color.WHITE);
+//		Font font1 = new Font("微软雅黑", Font.BOLD, 20);  
+//		JLabel label1 = new JLabel("Display Error");  
+//		label1.setFont(font1);
+//		setnumpanel3.add(label1);
+//		ImageIcon dicon1 = new ImageIcon("src/resource/OFF.png");
+//		ImageIcon dicon2 = new ImageIcon("src/resource/ON.png");
+//		JButton dbutton1 = new JButton();
+//		dbutton1.setPreferredSize(new Dimension(50, 26));
+//		dbutton1.setIcon(dicon1);
+//		dbutton1.setBorderPainted(false); // 不绘制按钮边框
+//		dbutton1.setContentAreaFilled(false); // 不填充按钮内容区域背景
+//		dbutton1.addMouseListener(new MouseAdapter() {  
+//            @Override  
+//            public void mousePressed(MouseEvent e) {  
+//            	dbutton1.setIcon(dicon2); // 鼠标点击时设置图标  
+//            }  
+//		});
+//		setbut3.add(0);
+//		setnumpanel3.add(dbutton1); // 将按钮添加到面板中
+//		panel_2.add(setnumpanel3);
 		tab2Panel.add(panel_2);
 		this.add(tab2Panel);
 	}

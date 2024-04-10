@@ -3,13 +3,63 @@ package guessequation.modle;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GuessModle {
-	private ArrayList<String> list = new ArrayList<>();
-	
-	public void init(int size) {
-		String s1 = "1+2=3";
-		list.add(s1);
+public class GuessModle extends ModleSubject{
+	private String equation;
+	private boolean displayError = true;
+	private boolean displayEquation;
+	private boolean randomEquation;
+	public void creatEquation(int size) {
+		equation = "1+2=3";
 	}
+	
+	public String getEquation() {
+		if(displayEquation) {
+			return "Now Equation:"+this.equation;
+		}else {
+			return "";
+		}
+	}
+	
+	public boolean isDisplayError() {
+		return displayError;
+	}
+	
+	public boolean setDisplayError() {
+		if(this.displayError) {
+			this.displayError = false;
+		}else {
+			this.displayError = true;
+		}
+		return this.displayError;
+	}
+
+	public boolean isDisplayEquation() {
+		return displayEquation;
+	}
+
+	public boolean setDisplayEquation() {
+		if(this.displayEquation) {
+			this.displayEquation = false;
+		}else {
+			this.displayEquation = true;
+		}
+		notifyObservers();
+		return this.displayEquation;
+	}
+
+	public boolean isRandomEquation() {
+		return randomEquation;
+	}
+
+	public boolean setRandomEquation() {
+		if(this.randomEquation) {
+			this.randomEquation = false;
+		}else {
+			this.randomEquation = true;
+		}
+		return this.randomEquation;
+	}
+
 	public ArrayList<String> getEquationList(ArrayList<Character> lstr) {
 		ArrayList<String> lrec = new ArrayList<>(); 
 		int upindex = 0;
@@ -64,14 +114,16 @@ public class GuessModle {
 		}
 		return temp;
 	}
-	public boolean legal(String str,int column) {
+	public String legal(String str,int column) {
 		int lsum = 0,upindex = 0,rsum = 0;
 		ArrayList<Character> slist = new ArrayList<>();
 		ArrayList<Integer> ilist = new ArrayList<>();
-		
-		if(str.length() != column || str.indexOf('=') == -1||(str.indexOf('+') == -1&&str.indexOf('-') == -1
+		if(str.length() != column) {
+			return "Equation length is less than "+column+"!";
+		}
+		if(str.indexOf('=') == -1||(str.indexOf('+') == -1&&str.indexOf('-') == -1
 				&&str.indexOf('*') == -1&&str.indexOf('/') == -1)) {
-			return false;
+			return "One or more symbols of \"=\", \"+\", \"-\", \"*\", \"/\" are missing!";
 		}
 		for(int i=0;i<str.length();i++) {
 			if(str.charAt(i) == '+') {
@@ -106,7 +158,7 @@ public class GuessModle {
 //		if(upindex < str.length())
 //			result = Integer.valueOf(str.substring(upindex));
 		if(slist.size() + 1 != ilist.size()) {
-			return false;
+			return "Equation format error!";
 		}
 		int index = 0;
 		int startIndex = 0;
@@ -157,9 +209,9 @@ public class GuessModle {
 		}
 		
 		if(lsum == rsum) {
-			return true;
+			return "OK";
 		}else {
-			return false;
+			return "The left and right sides of the equation are not equal!";
 		}
 	}
 //	public String creatFun1(int length) {
@@ -228,7 +280,7 @@ public class GuessModle {
 //	}
 	public ArrayList<Integer> guessModle(ArrayList<Character> inlist){
 		ArrayList<Integer> relist = new ArrayList<Integer>();
-		String sline = list.get(0);
+		String sline = equation;
 		for(int i = 0;i<inlist.size();i++) {
 			int rec = sline.indexOf(inlist.get(i));
 			if(rec == -1) {

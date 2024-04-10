@@ -11,7 +11,7 @@ public class Action {
 	private GameController gc;
 	private SetController sc;
 	private StatisticsView stv;
-	
+
 	public void setGc(GameController gc) {
 		this.gc = gc;
 	}
@@ -31,8 +31,6 @@ public class Action {
 	public void enter() {
 		if(gc.legal(gc.getViewColumn())) {
 			gc.guess();
-		}else {
-			gc.prompt();
 		}
 	}
 	public void symbol(ImageIcon icon,char str) {
@@ -50,5 +48,15 @@ public class Action {
 	}
 	public void arithmetic(int c,JButton button1) {
 		sc.updateSetAirth(c, button1);
+	}
+	
+	public void displayError() {
+		sc.setDisplayError();
+	}
+	public void displayEquation() {
+		sc.setDisplayEquation();
+	}
+	public void randomEquation() {
+		sc.setRandomEquation();
 	}
 }
