@@ -100,24 +100,28 @@ public class GameController implements ControllerObserver{
 				list.clear();
 				if(greenSum == relist.size()) {
 					view.won(); 
-					view.initGrid(view.getColumn());	
-					smodle.addGamesPlayed();
-					smodle.addGamesWon();
-					smodle.setPercentageWin((smodle.getGamesWon()*1.0/smodle.getGamesPlayed())*100);
-					smodle.setBestTry(view.getColumn());
-					smodle.notifyObservers();
-					smodle.initCorrectNumberList();
+					view.initGrid(view.getColumn());
+					if(!modle.isDisplayError()) {
+						smodle.addGamesPlayed();
+						smodle.addGamesWon();
+						smodle.setPercentageWin((smodle.getGamesWon()*1.0/smodle.getGamesPlayed())*100);
+						smodle.setBestTry(view.getColumn());
+						smodle.notifyObservers();
+						smodle.initCorrectNumberList();
+					}
 					modle.setColumn(view.getColumn());
 					modle.setEquation();
 					modle.notifyObservers();
 				}else if(greenSum != relist.size() && view.getLine() >= 6) {
 					view.fail(); 
-					view.initGrid(view.getColumn());	
-					smodle.addGamesPlayed();
-					smodle.setPercentageWin((smodle.getGamesWon()*1.0/smodle.getGamesPlayed())*100);
-					smodle.setBestTry(view.getColumn());
-					smodle.notifyObservers();
-					smodle.initCorrectNumberList();
+					view.initGrid(view.getColumn());
+					if(!modle.isDisplayError()) {
+						smodle.addGamesPlayed();
+						smodle.setPercentageWin((smodle.getGamesWon()*1.0/smodle.getGamesPlayed())*100);
+						smodle.setBestTry(view.getColumn());
+						smodle.notifyObservers();
+						smodle.initCorrectNumberList();
+					}
 					modle.setColumn(view.getColumn());
 					modle.setEquation();
 					modle.notifyObservers();
