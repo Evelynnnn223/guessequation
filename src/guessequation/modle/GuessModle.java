@@ -198,6 +198,9 @@ public class GuessModle extends ModleSubject{
 	}
 	public String legal(String str,int column) {
 		int lsum = 0,upindex = 0,rsum = 0;
+		if(equation.equals("There is no equation that meets the requirements")) {
+			return equation;
+		}
 		ArrayList<Character> slist = new ArrayList<>();
 		ArrayList<Integer> ilist = new ArrayList<>();
 		if(str.length() != column) {
@@ -207,6 +210,7 @@ public class GuessModle extends ModleSubject{
 				&&str.indexOf('*') == -1&&str.indexOf('/') == -1)) {
 			return "One or more symbols of \"=\", \"+\", \"-\", \"*\", \"/\" are missing!";
 		}
+		
 		for(int i=0;i<str.length();i++) {
 			if(str.charAt(i) == '+') {
 				slist.add('+');
@@ -242,6 +246,24 @@ public class GuessModle extends ModleSubject{
 		if(slist.size() + 1 != ilist.size()) {
 			return "Equation format error!";
 		}
+		for(int i=0;i<slist.size();i++) {
+			if(slist.get(i) == '*') {
+				int temp = ilist.get(i)*ilist.get(i+1);
+				ilist.set(i+1, temp);
+				ilist.remove(i);
+				slist.remove(i);
+				i=i-1;
+			}else if(slist.get(i) == '/') {
+				if(ilist.get(i+1) == 0) {
+					return "The divisor cannot be 0";
+				}
+				int temp = ilist.get(i)/ilist.get(i+1);
+				ilist.set(i+1, temp);
+				ilist.remove(i);
+				slist.remove(i);
+				i=i-1;
+			}
+		}
 		int index = 0;
 		int startIndex = 0;
 		while(true) {
@@ -252,10 +274,6 @@ public class GuessModle extends ModleSubject{
 						sum = ilist.get(index)+ilist.get(index+1);
 					}else if(slist.get(startIndex) == '-') {
 						sum = ilist.get(index)-ilist.get(index+1);
-					}else if(slist.get(startIndex) == '*') {
-						sum = ilist.get(index)*ilist.get(index+1);
-					}else if(slist.get(startIndex) == '/') {
-						sum = ilist.get(index)/ilist.get(index+1);
 					}else if(slist.get(startIndex) == '=') {
 						lsum = ilist.get(index);
 						startIndex = i+1;
@@ -268,10 +286,6 @@ public class GuessModle extends ModleSubject{
 						sum += ilist.get(index);
 					}else if(slist.get(i) == '-') {
 						sum -= ilist.get(index);
-					}else if(slist.get(i) == '*') {
-						sum *= ilist.get(index);
-					}else if(slist.get(i) == '/') {
-						sum /= ilist.get(index);
 					}else if(slist.get(i) == '=') {
 						lsum = sum;
 						startIndex = i+1;
@@ -286,6 +300,10 @@ public class GuessModle extends ModleSubject{
 			}
 			if(index >= ilist.size()) {
 				rsum = sum;
+				break;
+			}
+			if(startIndex >= slist.size()) {
+				rsum = ilist.get(index);
 				break;
 			}
 		}
@@ -370,7 +388,7 @@ public class GuessModle extends ModleSubject{
 				relist.add(0);
 			}else if(nowIndex) {
 				relist.add(1);
-			}else if(rec != 1 && !nowIndex){
+			}else if(rec != -1 && !nowIndex){
 				relist.add(2);
 			}
 		}

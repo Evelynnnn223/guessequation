@@ -27,6 +27,7 @@ public class SetView extends JPanel {
 //	private ArrayList<Integer> setbut3 = new ArrayList<Integer>();
 	private HashMap<Integer,JButton> map = new HashMap<Integer,JButton>();
 	private Action ac;
+	private JButton rbutton1 = new JButton();
 	public SetView(int num,Action ac) {
 		this.ac = ac;
 		init(num);
@@ -111,6 +112,12 @@ public class SetView extends JPanel {
     		button.setIcon(dicon1); // 鼠标点击时设置图标  
     	}
 	}
+	public void enableRestart() {
+		rbutton1.setEnabled(true);
+	}
+	public void disableRestart() {
+		rbutton1.setEnabled(false);
+	}
 	public void init(int column) {
 		this.setBackground(Color.WHITE);
 		// 创建 FlowLayout 实例并设置水平和垂直间距
@@ -183,6 +190,45 @@ public class SetView extends JPanel {
 		creatButton(panel_2,"Display Equation",decommand,1);
 		Command recommand = new RandomEquationCommand(ac);
 		creatButton(panel_2,"Random Equation",recommand,2);
+		
+		ImageIcon ricon = new ImageIcon("src/resource/restart.png");
+		ImageIcon hotricon = new ImageIcon("src/resource/hotrestart.png");
+		rbutton1 = new JButton();
+		JPanel repanel= new JPanel();
+		repanel.setBackground(Color.WHITE);
+		rbutton1.setPreferredSize(new Dimension(267, 60));
+		rbutton1.setIcon(ricon);
+		rbutton1.setBorderPainted(false); // 不绘制按钮边框
+		rbutton1.setContentAreaFilled(false); // 不填充按钮内容区域背景
+		rbutton1.setEnabled(false);
+		repanel.add(rbutton1); 
+		panel_2.add(repanel); // 将按钮添加到面板中
+		rbutton1.addMouseListener(new MouseAdapter() {  
+            @Override  
+            public void mousePressed(MouseEvent e) {  
+                rbutton1.setIcon(hotricon); // 鼠标点击时设置图标  
+            }  
+  
+            @Override  
+            public void mouseReleased(MouseEvent e) {  
+                rbutton1.setIcon(ricon); // 鼠标释放时设置回悬停图标  
+            }  
+            @Override  
+            public void mouseEntered(MouseEvent e) {  
+                // 鼠标进入按钮区域时，设置悬停状态的图标  
+                rbutton1.setIcon(hotricon);  
+            }  
+  
+            @Override  
+            public void mouseExited(MouseEvent e) {  
+                // 鼠标离开按钮区域时，设置正常状态的图标  
+                rbutton1.setIcon(ricon);  
+            }  
+        });  
+		Command rcommand = new RestartCommand(ac);
+		ButtonListener rbl = new ButtonListener(rcommand);
+		// 为按钮添加点击事件监听器
+		rbutton1.addActionListener(rbl);
 //		JPanel setnumpanel3= new JPanel();
 //		FlowLayout blayout = new FlowLayout(FlowLayout.CENTER, 150, 5);
 //		setnumpanel3.setLayout(blayout);

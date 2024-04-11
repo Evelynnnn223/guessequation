@@ -41,6 +41,9 @@ public class GameView extends JPanel {
 	private ArrayList<ImageIcon> greyajbi = new ArrayList<ImageIcon>();
 	private ArrayList<ImageIcon> yellowajbi = new ArrayList<ImageIcon>();
 	private ArrayList<ImageIcon> greenajbi = new ArrayList<ImageIcon>();
+	private ArrayList<JButton> abut = new ArrayList<JButton>();
+	private ArrayList<ImageIcon> abutIcon = new ArrayList<ImageIcon>();
+	private ArrayList<ImageIcon> adefbutIcon = new ArrayList<ImageIcon>();
 	private Action ac;
 	private int index = 0;// 当前操作的数字位置
 	private int line = 0;// 当前操作的数字位置
@@ -104,12 +107,25 @@ public class GameView extends JPanel {
 
 	public void yellowImage(int num) {
 		forward(yellowajbi.get(num));
+		changeKeybord(num, yellowajbi.get(num));
 	}
 	public void greyImage(int num) {
 		forward(greyajbi.get(num));
+		changeKeybord(num, greyajbi.get(num));
 	}
 	public void greenImage(int num) {
 		forward(greenajbi.get(num));
+		changeKeybord(num, greenajbi.get(num));
+	}
+	public void changeKeybord(int num,ImageIcon icon) {
+		JButton but = abut.get(num);
+		abutIcon.set(num, icon);
+		but.setIcon(icon);
+	}
+	public void defKeybord() {
+		for(int i=0;i<abut.size();i++) {
+			changeKeybord(i, adefbutIcon.get(i));
+		}
 	}
 	public void creatButton(JPanel panel,ImageIcon icon,ImageIcon hoticon,char str,Dimension dbutton) {
 		JButton button1 = new JButton();
@@ -122,6 +138,10 @@ public class GameView extends JPanel {
 		ButtonListener bsymbol = new ButtonListener(csymbol);
 		// 为按钮添加点击事件监听器
 		button1.addActionListener(bsymbol);
+		abut.add(button1);
+		abutIcon.add(icon);
+		adefbutIcon.add(icon);
+		int index = abutIcon.size()-1;
 		// 为按钮添加鼠标监听器
         button1.addMouseListener(new MouseAdapter() {  
             @Override  
@@ -131,7 +151,7 @@ public class GameView extends JPanel {
   
             @Override  
             public void mouseReleased(MouseEvent e) {  
-                button1.setIcon(icon); // 鼠标释放时设置回悬停图标  
+                button1.setIcon(abutIcon.get(index)); // 鼠标释放时设置回悬停图标  
             }  
             @Override  
             public void mouseEntered(MouseEvent e) {  
@@ -142,7 +162,7 @@ public class GameView extends JPanel {
             @Override  
             public void mouseExited(MouseEvent e) {  
                 // 鼠标离开按钮区域时，设置正常状态的图标  
-                button1.setIcon(icon);  
+                button1.setIcon(abutIcon.get(index));  
             }  
         });  
 	}
@@ -165,6 +185,7 @@ public class GameView extends JPanel {
 				panel1.add(label);
 			}
 		}
+		defKeybord();
 	}
 	
 	public void displayEquation(String equation) {
@@ -220,15 +241,17 @@ public class GameView extends JPanel {
 				
 				ImageIcon icont1 = new ImageIcon(img1);
 				ImageIcon icont2 = new ImageIcon(img2);
-				if(i != 14) {
-					ImageIcon icont3 = new ImageIcon(img3);
-					greyajbi.add(icont3);
-				}
+				ImageIcon icont3 = new ImageIcon(img3);
+				greyajbi.add(icont3);
 				yellowajbi.add(icont2);
 				greenajbi.add(icont1);
 				
 			}
-			
+			// 加载自定义图片
+			ImageIcon icon0 = new ImageIcon("src/resource/number0.png");
+			ImageIcon hoticon0 = new ImageIcon("src/resource/hotnumber0.png");
+			// 创建一个按钮
+			creatButton(panel2, icon0,hoticon0,'0',dbutton);
 			// 加载自定义图片
 			ImageIcon icon1 = new ImageIcon("src/resource/number1.png");
 			ImageIcon hoticon1 = new ImageIcon("src/resource/hotnumber1.png");
@@ -270,10 +293,7 @@ public class GameView extends JPanel {
 			ImageIcon hoticon9 = new ImageIcon("src/resource/hotnumber9.png");
 			creatButton(panel2, icon9,hoticon9,'9',dbutton);
 			// 加载自定义图片
-			ImageIcon icon0 = new ImageIcon("src/resource/number0.png");
-			ImageIcon hoticon0 = new ImageIcon("src/resource/hotnumber0.png");
-			// 创建一个按钮
-			creatButton(panel2, icon0,hoticon0,'0',dbutton);
+			
 
 			JPanel panel3 = new JPanel();
 			panel3.setBackground(Color.WHITE);

@@ -32,6 +32,7 @@ public class Action {
 	public void enter() {
 		if(gc.legal(gc.getViewColumn())) {
 			gc.guess();
+			sc.enableRestart();
 		}
 	}
 	public void symbol(ImageIcon icon,char str) {
@@ -46,9 +47,20 @@ public class Action {
 		gc.initGrid(num);
 		gc.clearList();
 		stc.setColumn(num);
+		sc.disableRestart();
 	}
+	
+	public void restart() {
+		gc.initGrid(gc.getViewColumn());
+		gc.clearList();
+		sc.disableRestart();
+	}
+	
 	public void arithmetic(int c,JButton button1) {
 		sc.updateSetAirth(c, button1);
+		gc.initGrid(gc.getViewColumn());
+		gc.clearList();
+		sc.disableRestart();
 	}
 	
 	public void displayError() {
@@ -59,5 +71,8 @@ public class Action {
 	}
 	public void randomEquation() {
 		sc.setRandomEquation();
+		gc.initGrid(gc.getViewColumn());
+		gc.clearList();
+		sc.disableRestart();
 	}
 }

@@ -16,7 +16,7 @@ public class MainView {
 	private JFrame frame;
 	private JTabbedPane tabbedPane;
 	public MainView(GuessModle gm, GameController gc) {
-		frame = new JFrame("Button Example");
+		frame = new JFrame("Guess Equation");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 设置窗口关闭时的操作
 		frame.setSize(800, 690); // 设置窗口大小
 		frame.setBackground(Color.WHITE);

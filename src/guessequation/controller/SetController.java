@@ -48,4 +48,10 @@ public class SetController {
 		boolean v = modle.setRandomEquation();
 		sv.setOffOn(2, v);
 	}
+	public void disableRestart() {
+		sv.disableRestart();
+	}
+	public void enableRestart() {
+		sv.enableRestart();
+	}
 }
