@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+//Help Page
 public class HelpView extends JPanel{
 
 	/**

@@ -1,5 +1,6 @@
 package guessequation.view;
 
+//DisplayError command
 public class DisplayErrorCommand extends Command {
 
 	public DisplayErrorCommand(Action ac) {

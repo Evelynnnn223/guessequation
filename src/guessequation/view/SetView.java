@@ -22,12 +22,12 @@ public class SetView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 4083200629505710917L;
-	private ArrayList<JButton> setbut1 = new ArrayList<JButton>();
-	private ArrayList<Integer> setbut2 = new ArrayList<Integer>();
-//	private ArrayList<Integer> setbut3 = new ArrayList<Integer>();
-	private HashMap<Integer,JButton> map = new HashMap<Integer,JButton>();
+	private ArrayList<JButton> setbut1 = new ArrayList<JButton>();//Equation Length Button List
+	private ArrayList<Integer> setbut2 = new ArrayList<Integer>();//Equation Length Button Status List
+	private HashMap<Integer,JButton> map = new HashMap<Integer,JButton>();//Operator and corresponding number map
 	private Action ac;
-	private JButton rbutton1 = new JButton();
+	private JButton rbutton1 = new JButton();//restart button
+	//Constructor Initializers
 	public SetView(int num,Action ac) {
 		this.ac = ac;
 		init(num);
@@ -35,6 +35,7 @@ public class SetView extends JPanel {
 	public void setAc(Action ac) {
 		this.ac = ac;
 	}
+
 	public ArrayList<JButton> getSetbut1() {
 		return setbut1;
 	}
@@ -42,7 +43,7 @@ public class SetView extends JPanel {
 	public ArrayList<Integer> getSetbut2() {
 		return setbut2;
 	}
-	
+	//Processing of clicking the exclude symbol button
 	public boolean updateSetAirth(int c,JButton button1) {
 		if(setbut2.get(c-13) == 1 && setbut2.stream().filter(v -> v == 1).count() > 1) {
 			ImageIcon icon = new ImageIcon("src/resource/set"+c+".png");
@@ -56,6 +57,7 @@ public class SetView extends JPanel {
 			return true;
 		}
 	}
+	//Processing of clicking on the equation length button
 	public void updateSetNum(int num,JButton button1) {
 		for(int i=5;i<13;i++) {
 			JButton button = setbut1.get(i-5);
@@ -65,6 +67,7 @@ public class SetView extends JPanel {
 		ImageIcon icon1 = new ImageIcon("src/resource/setgreen"+num+".png");
 		button1.setIcon(icon1);
 	}
+	//create button
 	public void creatButton(JPanel panel,String str,Command command,int num) {
 		JPanel setnumpanel3= new JPanel();
 		FlowLayout blayout = new FlowLayout(FlowLayout.CENTER, 150, 5);
@@ -81,25 +84,13 @@ public class SetView extends JPanel {
 		setnumpanel3.add(ptext);
 		JButton dbutton1 = new JButton();
 		dbutton1.setPreferredSize(new Dimension(50, 26));
-		dbutton1.setBorderPainted(false); // 不绘制按钮边框
-		dbutton1.setContentAreaFilled(false); // 不填充按钮内容区域背景
-//		dbutton1.addMouseListener(new MouseAdapter() {  
-//            @Override  
-//            public void mousePressed(MouseEvent e) {  
-//            	if(setbut3.get(num) == 0) {
-//            		dbutton1.setIcon(dicon2); // 鼠标点击时设置图标  
-//            		setbut3.set(num, 1);
-//            	}else {
-//            		dbutton1.setIcon(dicon1); // 鼠标点击时设置图标  
-//            		setbut3.set(num, 0);
-//            	}
-//            }  
-//		});
-		ButtonListener bl = new ButtonListener(command);
-		// 为按钮添加点击事件监听器
+		dbutton1.setBorderPainted(false); // Do not draw button borders
+		dbutton1.setContentAreaFilled(false); //Unfill button content area background
+		ButtonListener bl = new ButtonListener(command);//Set button click command
+		// Add a click event listener to the button
 		dbutton1.addActionListener(bl);
 		map.put(num, dbutton1);
-		setnumpanel3.add(dbutton1); // 将按钮添加到面板中
+		setnumpanel3.add(dbutton1); // Add buttons to the panel
 		panel.add(setnumpanel3);
 	}
 	public void setOffOn(int num,boolean v) {
@@ -107,20 +98,24 @@ public class SetView extends JPanel {
 		ImageIcon dicon1 = new ImageIcon("src/resource/OFF.png");
 		ImageIcon dicon2 = new ImageIcon("src/resource/ON.png");
 		if(v) {
-    		button.setIcon(dicon2); // 鼠标点击时设置图标  
+    		button.setIcon(dicon2); // Set icon on mouse click
     	}else {
-    		button.setIcon(dicon1); // 鼠标点击时设置图标  
+    		button.setIcon(dicon1); // Set icon on mouse click
     	}
 	}
+	
+	//Enable Restart button
 	public void enableRestart() {
 		rbutton1.setEnabled(true);
 	}
+	//Disable Restart button
 	public void disableRestart() {
 		rbutton1.setEnabled(false);
 	}
+	//Initialize interface
 	public void init(int column) {
 		this.setBackground(Color.WHITE);
-		// 创建 FlowLayout 实例并设置水平和垂直间距
+		// Create a FlowLayout instance and set horizontal and vertical spacing
 		FlowLayout layout = new FlowLayout(FlowLayout.CENTER, 5, 0);
         JPanel tab2Panel = new JPanel();  
         tab2Panel.setBackground(Color.WHITE);
@@ -148,13 +143,13 @@ public class SetView extends JPanel {
 			JButton button1 = new JButton();
 			button1.setPreferredSize(new Dimension(34, 32));
 			button1.setIcon(icon1);
-			button1.setBorderPainted(false); // 不绘制按钮边框
-			button1.setContentAreaFilled(false); // 不填充按钮内容区域背景
-			setnumpanel.add(button1); // 将按钮添加到面板中
+			button1.setBorderPainted(false); // Do not draw button borders
+			button1.setContentAreaFilled(false); // Unfill button content area background
+			setnumpanel.add(button1); // Add buttons to the panel
 			setbut1.add(button1);
 			Command cgroove = new SetGrooveCommand(i, button1, ac);
 			ButtonListener bcgroove = new ButtonListener(cgroove);
-			// 为按钮添加点击事件监听器
+			// Add a click event listener to the button
 			button1.addActionListener(bcgroove);
 		}
 		panel_2.add(setnumpanel);
@@ -163,7 +158,6 @@ public class SetView extends JPanel {
 		setpanel2.setLayout(layout);
 		ImageIcon setinfo2Icon = new ImageIcon("src/resource/setinfo2.png"); 
 		JLabel setinfo1label2 = new JLabel(setinfo2Icon);
-		//setinfo1label1.setPreferredSize(new Dimension(372, 50));
 		setpanel2.add(setinfo1label2);
 		panel_2.add(setpanel2);
 		JPanel setnumpanel2= new JPanel();
@@ -174,13 +168,13 @@ public class SetView extends JPanel {
 			JButton button1 = new JButton();
 			button1.setPreferredSize(new Dimension(34, 32));
 			button1.setIcon(icon1);
-			button1.setBorderPainted(false); // 不绘制按钮边框
-			button1.setContentAreaFilled(false); // 不填充按钮内容区域背景
-			setnumpanel2.add(button1); // 将按钮添加到面板中
+			button1.setBorderPainted(false); // Do not draw button borders
+			button1.setContentAreaFilled(false); // Unfill button content area background
+			setnumpanel2.add(button1); // Add buttons to the panel
 			setbut2.add(1);
 			Command arithmentic = new SetArithmeticCommand(i, button1, ac);
 			ButtonListener barithmentic = new ButtonListener(arithmentic);
-			// 为按钮添加点击事件监听器
+			// Add a click event listener to the button
 			button1.addActionListener(barithmentic);
 		}
 		panel_2.add(setnumpanel2);
@@ -198,61 +192,37 @@ public class SetView extends JPanel {
 		repanel.setBackground(Color.WHITE);
 		rbutton1.setPreferredSize(new Dimension(267, 60));
 		rbutton1.setIcon(ricon);
-		rbutton1.setBorderPainted(false); // 不绘制按钮边框
-		rbutton1.setContentAreaFilled(false); // 不填充按钮内容区域背景
+		rbutton1.setBorderPainted(false); // Do not draw button borders
+		rbutton1.setContentAreaFilled(false); // Unfill button content area background
 		rbutton1.setEnabled(false);
 		repanel.add(rbutton1); 
-		panel_2.add(repanel); // 将按钮添加到面板中
+		panel_2.add(repanel); // Add buttons to the panel
 		rbutton1.addMouseListener(new MouseAdapter() {  
             @Override  
             public void mousePressed(MouseEvent e) {  
-                rbutton1.setIcon(hotricon); // 鼠标点击时设置图标  
+                rbutton1.setIcon(hotricon); // Set icon on mouse click
             }  
   
             @Override  
             public void mouseReleased(MouseEvent e) {  
-                rbutton1.setIcon(ricon); // 鼠标释放时设置回悬停图标  
+                rbutton1.setIcon(ricon); // Set hover icon when mouse is released
             }  
             @Override  
             public void mouseEntered(MouseEvent e) {  
-                // 鼠标进入按钮区域时，设置悬停状态的图标  
+                // When the mouse enters the button area, set the hovering icon
                 rbutton1.setIcon(hotricon);  
             }  
   
             @Override  
             public void mouseExited(MouseEvent e) {  
-                // 鼠标离开按钮区域时，设置正常状态的图标  
+                // When the mouse enters the button area, set the hovering icon
                 rbutton1.setIcon(ricon);  
             }  
         });  
 		Command rcommand = new RestartCommand(ac);
 		ButtonListener rbl = new ButtonListener(rcommand);
-		// 为按钮添加点击事件监听器
+		// Add a click event listener to the button
 		rbutton1.addActionListener(rbl);
-//		JPanel setnumpanel3= new JPanel();
-//		FlowLayout blayout = new FlowLayout(FlowLayout.CENTER, 150, 5);
-//		setnumpanel3.setLayout(blayout);
-//		setnumpanel3.setBackground(Color.WHITE);
-//		Font font1 = new Font("微软雅黑", Font.BOLD, 20);  
-//		JLabel label1 = new JLabel("Display Error");  
-//		label1.setFont(font1);
-//		setnumpanel3.add(label1);
-//		ImageIcon dicon1 = new ImageIcon("src/resource/OFF.png");
-//		ImageIcon dicon2 = new ImageIcon("src/resource/ON.png");
-//		JButton dbutton1 = new JButton();
-//		dbutton1.setPreferredSize(new Dimension(50, 26));
-//		dbutton1.setIcon(dicon1);
-//		dbutton1.setBorderPainted(false); // 不绘制按钮边框
-//		dbutton1.setContentAreaFilled(false); // 不填充按钮内容区域背景
-//		dbutton1.addMouseListener(new MouseAdapter() {  
-//            @Override  
-//            public void mousePressed(MouseEvent e) {  
-//            	dbutton1.setIcon(dicon2); // 鼠标点击时设置图标  
-//            }  
-//		});
-//		setbut3.add(0);
-//		setnumpanel3.add(dbutton1); // 将按钮添加到面板中
-//		panel_2.add(setnumpanel3);
 		tab2Panel.add(panel_2);
 		this.add(tab2Panel);
 	}

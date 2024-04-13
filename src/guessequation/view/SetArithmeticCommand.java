@@ -2,6 +2,7 @@ package guessequation.view;
 
 import javax.swing.JButton;
 
+//SetArithmetic command
 public class SetArithmeticCommand extends Command {
 	private int c;
 	private JButton button1;

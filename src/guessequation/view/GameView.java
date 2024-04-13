@@ -36,19 +36,20 @@ public class GameView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 615688341641039725L;
-	private ArrayList<JLabel> ajl = new ArrayList<JLabel>();
-	private ArrayList<JPanel> ajp = new ArrayList<JPanel>();
-	private ArrayList<ImageIcon> greyajbi = new ArrayList<ImageIcon>();
-	private ArrayList<ImageIcon> yellowajbi = new ArrayList<ImageIcon>();
-	private ArrayList<ImageIcon> greenajbi = new ArrayList<ImageIcon>();
-	private ArrayList<JButton> abut = new ArrayList<JButton>();
-	private ArrayList<ImageIcon> abutIcon = new ArrayList<ImageIcon>();
-	private ArrayList<ImageIcon> adefbutIcon = new ArrayList<ImageIcon>();
-	private Action ac;
-	private int index = 0;// 当前操作的数字位置
-	private int line = 0;// 当前操作的数字位置
-	private int column;
-	private JPanel ptext = new JPanel();
+	private ArrayList<JLabel> ajl = new ArrayList<JLabel>();//List of images in the grid
+	private ArrayList<JPanel> ajp = new ArrayList<JPanel>();//Grid panels for each row
+	private ArrayList<ImageIcon> greyajbi = new ArrayList<ImageIcon>();//Gray image
+	private ArrayList<ImageIcon> yellowajbi = new ArrayList<ImageIcon>();//yellow image
+	private ArrayList<ImageIcon> greenajbi = new ArrayList<ImageIcon>();//green image
+	private ArrayList<JButton> abut = new ArrayList<JButton>();//All button list
+	private ArrayList<ImageIcon> abutIcon = new ArrayList<ImageIcon>();//List of all button images
+	private ArrayList<ImageIcon> adefbutIcon = new ArrayList<ImageIcon>();//All buttons default image list
+	private Action ac;//Command executor
+	private int index = 0;// The number position of the current operation
+	private int line = 0;// Number of rows for the current operation
+	private int column;//Equation length
+	private JPanel ptext = new JPanel();//Display panel for equations
+	//Constructor Initializers
 	public GameView(int num,Action ac) {
 		this.ac = ac;
 		init(num);
@@ -86,10 +87,14 @@ public class GameView extends JPanel {
 	public void setColumn(int column) {
 		this.column = column;
 	}
+	
+	//Replace the image
 	public void switchImage(ImageIcon icon) {
 		JLabel jl = ajl.get(this.line * column + this.index);
 		jl.setIcon(icon);
 	}
+	
+	//Replace the current location image
 	public boolean forward(ImageIcon icon) {
 		if (this.index < column) {
 			switchImage(icon);
@@ -98,74 +103,84 @@ public class GameView extends JPanel {
 		}
 		return false;
 	}
+	
+	//Backspace, swap the current position image back to default
 	public void backward(ImageIcon icon) {
 		if (index > 0) {
 			index--;
 			switchImage(icon);
 		}
 	}
-
+	
+	//The current position displays a yellow image
 	public void yellowImage(int num) {
 		forward(yellowajbi.get(num));
 		changeKeybord(num, yellowajbi.get(num));
 	}
+	//The current position displays a grey image
 	public void greyImage(int num) {
 		forward(greyajbi.get(num));
 		changeKeybord(num, greyajbi.get(num));
 	}
+	//The current position displays a green image
 	public void greenImage(int num) {
 		forward(greenajbi.get(num));
 		changeKeybord(num, greenajbi.get(num));
 	}
+	//Replace keyboard image
 	public void changeKeybord(int num,ImageIcon icon) {
 		JButton but = abut.get(num);
 		abutIcon.set(num, icon);
 		but.setIcon(icon);
 	}
+	//Restore keyboard image
 	public void defKeybord() {
 		for(int i=0;i<abut.size();i++) {
 			changeKeybord(i, adefbutIcon.get(i));
 		}
 	}
+	//creat button
 	public void creatButton(JPanel panel,ImageIcon icon,ImageIcon hoticon,char str,Dimension dbutton) {
 		JButton button1 = new JButton();
 		button1.setPreferredSize(dbutton);
 		button1.setIcon(icon);
-		button1.setBorderPainted(false); // 不绘制按钮边框
-		button1.setContentAreaFilled(false); // 不填充按钮内容区域背景
-		panel.add(button1); // 将按钮添加到面板中
+		button1.setBorderPainted(false); // Do not draw button borders
+		button1.setContentAreaFilled(false); // Unfill button content area background
+		panel.add(button1); // Add buttons to the panel
 		Command csymbol = new GameSymbolCommand(icon, str, ac);
 		ButtonListener bsymbol = new ButtonListener(csymbol);
-		// 为按钮添加点击事件监听器
+		// Add a click event listener to the button
 		button1.addActionListener(bsymbol);
 		abut.add(button1);
 		abutIcon.add(icon);
 		adefbutIcon.add(icon);
 		int index = abutIcon.size()-1;
-		// 为按钮添加鼠标监听器
+		// Add a mouse listener to the button
         button1.addMouseListener(new MouseAdapter() {  
             @Override  
             public void mousePressed(MouseEvent e) {  
-                button1.setIcon(hoticon); // 鼠标点击时设置图标  
+                button1.setIcon(hoticon); //Set icon on mouse click
             }  
   
             @Override  
             public void mouseReleased(MouseEvent e) {  
-                button1.setIcon(abutIcon.get(index)); // 鼠标释放时设置回悬停图标  
+                button1.setIcon(abutIcon.get(index)); // Set hover icon when mouse is released
             }  
             @Override  
             public void mouseEntered(MouseEvent e) {  
-                // 鼠标进入按钮区域时，设置悬停状态的图标  
+                // When the mouse enters the button area, set the hovering icon
                 button1.setIcon(hoticon);  
             }  
   
             @Override  
             public void mouseExited(MouseEvent e) {  
-                // 鼠标离开按钮区域时，设置正常状态的图标  
+                // When the mouse leaves the button area, set the icon for the normal state
                 button1.setIcon(abutIcon.get(index));  
             }  
         });  
 	}
+	
+	//Reinitialize Page
 	public void initGrid(int column) {
 		this.line = 0;
 		this.index = 0;
@@ -178,7 +193,7 @@ public class GameView extends JPanel {
 			panel1.setBackground(Color.WHITE);
 			panel1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			for (int i = 0; i < column; i++) {
-				// 创建一个JLabel来显示图片
+				// Create a JLabel to display images
 				JLabel label = new JLabel(icon);
 				label.setPreferredSize(new Dimension(57, 57));
 				ajl.add(label);
@@ -188,6 +203,7 @@ public class GameView extends JPanel {
 		defKeybord();
 	}
 	
+	//Display Equation
 	public void displayEquation(String equation) {
 		ptext.removeAll();
 		Font font1 = new Font("微软雅黑", Font.BOLD, 20);  
@@ -197,10 +213,11 @@ public class GameView extends JPanel {
 		ptext.add(label1);
 	}
 	
+	//Initialize Page
 	public void init(int column) {
 		this.column = column;
 		this.setBackground(Color.WHITE);
-		// 创建 FlowLayout 实例并设置水平和垂直间距
+		// Create a FlowLayout instance and set horizontal and vertical spacing
 		FlowLayout layout = new FlowLayout(FlowLayout.CENTER, 5, 0);
 		//tabbedPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT); 
 		JPanel panelts = new JPanel();
@@ -211,7 +228,7 @@ public class GameView extends JPanel {
 		panel.add(panelts);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		Dimension dbutton = new Dimension(55, 57);
-			// 加载图片
+			// load picture
 			ImageIcon icon = new ImageIcon("src/resource/1.png");
 			JPanel panelt = new JPanel();
 			panelt.setBackground(Color.WHITE);
@@ -221,7 +238,7 @@ public class GameView extends JPanel {
 				panel1.setBackground(Color.WHITE);
 				panel1.setLayout(layout);
 				for (int i = 0; i < column; i++) {
-					// 创建一个JLabel来显示图片
+					// Create a JLabel to display images
 					JLabel label = new JLabel(icon);
 					label.setPreferredSize(dbutton);
 					ajl.add(label);
@@ -247,145 +264,145 @@ public class GameView extends JPanel {
 				greenajbi.add(icont1);
 				
 			}
-			// 加载自定义图片
+			// Load custom images
 			ImageIcon icon0 = new ImageIcon("src/resource/number0.png");
 			ImageIcon hoticon0 = new ImageIcon("src/resource/hotnumber0.png");
-			// 创建一个按钮
+			// Create a button
 			creatButton(panel2, icon0,hoticon0,'0',dbutton);
-			// 加载自定义图片
+			// Load custom images
 			ImageIcon icon1 = new ImageIcon("src/resource/number1.png");
 			ImageIcon hoticon1 = new ImageIcon("src/resource/hotnumber1.png");
-			// 创建一个按钮
+			// Create a button
 			creatButton(panel2, icon1,hoticon1,'1',dbutton);
-			// 加载自定义图片
+			// Load custom images
 			ImageIcon icon2 = new ImageIcon("src/resource/number2.png");
 			ImageIcon hoticon2 = new ImageIcon("src/resource/hotnumber2.png");
-			// 创建一个按钮
+			// Create a button
 			creatButton(panel2, icon2,hoticon2,'2',dbutton);
-			// 加载自定义图片
+			// Load custom images
 			ImageIcon icon3 = new ImageIcon("src/resource/number3.png");
 			ImageIcon hoticon3 = new ImageIcon("src/resource/hotnumber3.png");
-			// 创建一个按钮
+			// Create a button
 			creatButton(panel2, icon3,hoticon3,'3',dbutton);
-			// 加载自定义图片
+			// Load custom images
 			ImageIcon icon4 = new ImageIcon("src/resource/number4.png");
 			ImageIcon hoticon4 = new ImageIcon("src/resource/hotnumber4.png");
-			// 创建一个按钮
+			// Create a button
 			creatButton(panel2, icon4,hoticon4,'4',dbutton);
-			// 加载自定义图片
+			// Load custom images
 			ImageIcon icon5 = new ImageIcon("src/resource/number5.png");
 			ImageIcon hoticon5 = new ImageIcon("src/resource/hotnumber5.png");
 			creatButton(panel2, icon5,hoticon5,'5',dbutton);
-			// 加载自定义图片
+			// Load custom images
 			ImageIcon icon6 = new ImageIcon("src/resource/number6.png");
 			ImageIcon hoticon6 = new ImageIcon("src/resource/hotnumber6.png");
 			creatButton(panel2, icon6,hoticon6,'6',dbutton);
-			// 加载自定义图片
+			// Load custom images
 			ImageIcon icon7 = new ImageIcon("src/resource/number7.png");
 			ImageIcon hoticon7 = new ImageIcon("src/resource/hotnumber7.png");
 			creatButton(panel2, icon7,hoticon7,'7',dbutton);
-			// 加载自定义图片
+			// Load custom images
 			ImageIcon icon8 = new ImageIcon("src/resource/number8.png");
 			ImageIcon hoticon8 = new ImageIcon("src/resource/hotnumber8.png");
 			creatButton(panel2, icon8,hoticon8,'8',dbutton);
-			// 加载自定义图片
+			// Load custom images
 			ImageIcon icon9 = new ImageIcon("src/resource/number9.png");
 			ImageIcon hoticon9 = new ImageIcon("src/resource/hotnumber9.png");
 			creatButton(panel2, icon9,hoticon9,'9',dbutton);
-			// 加载自定义图片
+			// Load custom images
 			
 
 			JPanel panel3 = new JPanel();
 			panel3.setBackground(Color.WHITE);
 			panel3.setLayout(layout);
 			Dimension dbutton2 = new Dimension(118, 58);
-			// 创建一个按钮
+			// Create a button
 			JButton button11 = new JButton();
 			ImageIcon iconback = new ImageIcon("src/resource/back.png");
 			ImageIcon hoticonback = new ImageIcon("src/resource/hotback.png");
 			button11.setPreferredSize(dbutton2);
 			button11.setIcon(iconback);
-			button11.setBorderPainted(false); // 不绘制按钮边框
-			button11.setContentAreaFilled(false); // 不填充按钮内容区域背景
+			button11.setBorderPainted(false); // Do not draw button borders
+			button11.setContentAreaFilled(false); // Unfill button content area background
 			button11.addMouseListener(new MouseAdapter() {  
 	            @Override  
 	            public void mousePressed(MouseEvent e) {  
-	                button11.setIcon(hoticonback); // 鼠标点击时设置图标  
+	                button11.setIcon(hoticonback); //Set icon on mouse click
 	            }  
 	  
 	            @Override  
 	            public void mouseReleased(MouseEvent e) {  
-	                button11.setIcon(iconback); // 鼠标释放时设置回悬停图标  
+	                button11.setIcon(iconback); // Set hover icon when mouse is released
 	            }  
 	            @Override  
 	            public void mouseEntered(MouseEvent e) {  
-	                // 鼠标进入按钮区域时，设置悬停状态的图标  
+	                // When the mouse enters the button area, set the hovering icon
 	                button11.setIcon(hoticonback);  
 	            }  
 	  
 	            @Override  
 	            public void mouseExited(MouseEvent e) {  
-	                // 鼠标离开按钮区域时，设置正常状态的图标  
+	                // When the mouse leaves the button area, set the icon for the normal state
 	                button11.setIcon(iconback);  
 	            }  
 			});
-			panel3.add(button11); // 将按钮添加到面板中
+			panel3.add(button11); // Add buttons to the panel
 			Command cback = new GameBackCommand(icon, ac);
 			ButtonListener bback = new ButtonListener(cback);
-			// 为按钮添加点击事件监听器
+			// Add a click event listener to the button
 			button11.addActionListener(bback);
 			Dimension dbutton1 = new Dimension(64, 55);
-			// 创建一个按钮
+			// Create a button
 			ImageIcon iconsum = new ImageIcon("src/resource/sum.png");
 			ImageIcon hoticonsum = new ImageIcon("src/resource/hotsum.png");
 			creatButton(panel3, iconsum,hoticonsum,'+',dbutton1);
-			// 创建一个按钮
+			// Create a button
 			ImageIcon iconreduce = new ImageIcon("src/resource/reduce.png");
 			ImageIcon hoticonreduce = new ImageIcon("src/resource/hotreduce.png");
 			creatButton(panel3, iconreduce,hoticonreduce,'-',dbutton1);
-			// 创建一个按钮
+			// Create a button
 			ImageIcon iconride = new ImageIcon("src/resource/ride.png");
 			ImageIcon hoticonride = new ImageIcon("src/resource/hotride.png");
 			creatButton(panel3, iconride,hoticonride,'*',dbutton1);
-			// 创建一个按钮
+			// Create a button
 			ImageIcon iconexcept = new ImageIcon("src/resource/except.png");
 			ImageIcon hoticonexcept = new ImageIcon("src/resource/hotexcept.png");
 			creatButton(panel3, iconexcept,hoticonexcept,'/',dbutton1);
-			// 创建一个按钮
+			// Create a button
 			ImageIcon iconequal = new ImageIcon("src/resource/equal.png");
 			ImageIcon hoticonequal = new ImageIcon("src/resource/hotequal.png");
 			creatButton(panel3, iconequal,hoticonequal,'=',dbutton1);
-			// 创建一个按钮
+			// Create a button
 			JButton button17 = new JButton();
 			ImageIcon iconenter = new ImageIcon("src/resource/enter.png");
 			ImageIcon hoticonenter = new ImageIcon("src/resource/hotenter.png");
 			button17.setPreferredSize(dbutton2);
 			button17.setIcon(iconenter);
-			button17.setBorderPainted(false); // 不绘制按钮边框
-			button17.setContentAreaFilled(false); // 不填充按钮内容区域背景
+			button17.setBorderPainted(false); // Do not draw button borders
+			button17.setContentAreaFilled(false); // Unfill button content area background
 			button17.addMouseListener(new MouseAdapter() {  
 	            @Override  
 	            public void mousePressed(MouseEvent e) {  
-	                button17.setIcon(hoticonenter); // 鼠标点击时设置图标  
+	                button17.setIcon(hoticonenter); //Set icon on mouse click
 	            }  
 	  
 	            @Override  
 	            public void mouseReleased(MouseEvent e) {  
-	                button17.setIcon(iconenter); // 鼠标释放时设置回悬停图标  
+	                button17.setIcon(iconenter); // Set hover icon when mouse is released
 	            }  
 	            @Override  
 	            public void mouseEntered(MouseEvent e) {  
-	                // 鼠标进入按钮区域时，设置悬停状态的图标  
+	                // When the mouse enters the button area, set the hovering icon
 	                button17.setIcon(hoticonenter);  
 	            }  
 	  
 	            @Override  
 	            public void mouseExited(MouseEvent e) {  
-	                // 鼠标离开按钮区域时，设置正常状态的图标  
+	                // When the mouse leaves the button area, set the icon for the normal state
 	                button17.setIcon(iconenter);  
 	            }  
 			});
-			panel3.add(button17); // 将按钮添加到面板中
+			panel3.add(button17); // Add buttons to the panel
 			Command center = new GameEnterCommand(ac);
 			ButtonListener benter = new ButtonListener(center);
 			button17.addActionListener(benter);
@@ -395,6 +412,8 @@ public class GameView extends JPanel {
 			this.add(ptext);
 			initGrid(column);
 	}
+	
+	//Message Popup
 	public void prompt(String str) {
 		JOptionPane.showMessageDialog(this, str);
 	}

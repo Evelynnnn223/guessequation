@@ -2,6 +2,7 @@ package guessequation.view;
 
 import javax.swing.ImageIcon;
 
+//GameBack command
 public class GameBackCommand extends Command {
 
 	private ImageIcon icon;

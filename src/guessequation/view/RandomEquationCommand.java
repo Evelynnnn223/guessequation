@@ -1,5 +1,6 @@
 package guessequation.view;
 
+//RandomEquation command
 public class RandomEquationCommand extends Command {
 
 	public RandomEquationCommand(Action ac) {

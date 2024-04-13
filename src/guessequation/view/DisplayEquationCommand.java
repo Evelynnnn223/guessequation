@@ -1,5 +1,6 @@
 package guessequation.view;
 
+//DisplayEquation command
 public class DisplayEquationCommand extends Command {
 
 	public DisplayEquationCommand(Action ac) {

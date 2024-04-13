@@ -1,8 +1,9 @@
 package guessequation.view;
 
+//Command abstraction class
 public abstract class Command {
 	
-	protected Action ac;
+	protected Action ac;//Performer Object
 	
-	public abstract void execute();
+	public abstract void execute();//Execute Command
 }

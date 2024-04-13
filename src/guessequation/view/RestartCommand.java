@@ -1,5 +1,6 @@
 package guessequation.view;
 
+//Restart command
 public class RestartCommand extends Command {
 
 	public RestartCommand(Action ac) {

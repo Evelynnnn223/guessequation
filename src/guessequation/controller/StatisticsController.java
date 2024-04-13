@@ -3,72 +3,22 @@ package guessequation.controller;
 import guessequation.modle.StatisticsModle;
 import guessequation.view.StatisticsView;
 
+//Game result statistics interface controller
 public class StatisticsController implements ControllerObserver{
 	private StatisticsModle smodle;
 	private StatisticsView sv;
-	
+	//Constructor Initializers 
 	public StatisticsController(StatisticsModle smodle, StatisticsView sv) {
 		super();
 		this.smodle = smodle;
 		this.sv = sv;
 	}
+	
 	public void setColumn(int column) {
 		sv.setColumn(column);;
 	}
-//	public int getGamesPlayed() {
-//		return smodle.getGamesPlayed();
-//	}
-//
-//	public int getGamesWon() {
-//		return smodle.getGamesWon();
-//	}
-//
-//	public double getPercentageWin() {
-//		return smodle.getPercentageWin();
-//	}
-//
-//	public int getBestTry() {
-//		return smodle.getBestTry();
-//	}
-//
-//	public int getCurrentStreak() {
-//		return smodle.getCurrentStreak();
-//	}
-//
-//	public int getMaxStreak() {
-//		return smodle.getMaxStreak();
-//	}
-//
-//	public void addGamesPlayed() {
-//		smodle.addGamesPlayed();
-//	}
-//	
-//	public void addGamesWon() {
-//		smodle.addGamesWon();
-//	}
-	
-//	public void setPercentageWin(int percentageWin) {
-//		smodle.setPercentageWin(percentageWin);
-//	}
-//	
-//	public void setBestTry(int column) {
-//		smodle.setBestTry(column);
-//	}
-//	
-//	public void setCurrentStreak(int currentStreak) {
-//		smodle.setCurrentStreak(currentStreak);
-//	}
-//	
-//	public void setMaxStreak(int maxStreak) {
-//		smodle.setMaxStreak(maxStreak);
-//	}
-//	public int getCorrectNumber(int index) {
-//		return smodle.getCorrectNumber(index);
-//	}
-//	public double getAccuracy(int index) {
-//		return (getCorrectNumber(index)*1.0/sv.getColumn())*100;
-//	}
-//	
+
+	//Observer Mode Update Method
 	@Override
 	public void updata() {
 		setViewGamesPlayed();
@@ -80,34 +30,37 @@ public class StatisticsController implements ControllerObserver{
 		setViewList();
 		setViesDlist();
 	}
+	
+	//Set game count
 	public void setViewGamesPlayed() {
 		sv.setGamesPlayed(smodle.getGamesPlayed());
 	}
-
+	//Set the number of game victories
 	public void setViewGamesWon() {
 		sv.setGamesWon(smodle.getGamesWon());
 	}
-
+	//Set game victory percentage
 	public void setViewPercentageWin() {
 		sv.setPercentageWin(smodle.getPercentageWin());
 	}
-
+	//Set the best number of times
 	public void setViewBestTry() {
 		sv.setBestTry(smodle.getBestTry());
 	}
-
+	//Set Current Streak
 	public void setViewCurrentStreak() {
 		sv.setCurrentStreak(smodle.getCurrentStreak());
 	}
-
+	//Set Max Streak
 	public void setViewMaxStreak() {
 		sv.setMaxStreak(smodle.getMaxStreak());
 	}
 	
+	//Set the best score list
 	public void setViewList() {
 		sv.setList(smodle.getList());
 	}
-
+	//Set the best score percentage list
 	public void setViesDlist() {
 		sv.setDlist(smodle.getDlist());
 	}

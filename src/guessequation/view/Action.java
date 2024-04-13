@@ -7,6 +7,7 @@ import guessequation.controller.GameController;
 import guessequation.controller.SetController;
 import guessequation.controller.StatisticsController;
 
+//Class for executing actions
 public class Action {
 	private GameController gc;
 	private SetController sc;
@@ -29,19 +30,25 @@ public class Action {
 		super();
 	}
 
+	//Click enter button action
 	public void enter() {
 		if(gc.legal(gc.getViewColumn())) {
 			gc.guess();
 			sc.enableRestart();
 		}
 	}
+	
+	//The action of clicking on the number and operation symbol buttons
 	public void symbol(ImageIcon icon,char str) {
 		gc.add(str,icon);
 	}
 	
+	//Click backward button action
 	public void backward(ImageIcon icon) {
 		gc.remove(icon);
 	}
+	
+	//Action of clicking the set equation length button
 	public void groove(int num,JButton button1) {
 		sc.updateSetNum(num,button1);
 		gc.initGrid(num);
@@ -50,12 +57,14 @@ public class Action {
 		sc.disableRestart();
 	}
 	
+	//Click restart button action
 	public void restart() {
 		gc.initGrid(gc.getViewColumn());
 		gc.clearList();
 		sc.disableRestart();
 	}
 	
+	//Click the exclude operation symbol button action
 	public void arithmetic(int c,JButton button1) {
 		sc.updateSetAirth(c, button1);
 		gc.initGrid(gc.getViewColumn());
@@ -63,12 +72,17 @@ public class Action {
 		sc.disableRestart();
 	}
 	
+	//Click DisplayError button action
 	public void displayError() {
 		sc.setDisplayError();
 	}
+	
+	//Click DisplayEquation button action
 	public void displayEquation() {
 		sc.setDisplayEquation();
 	}
+	
+	//Click RandomEquation button action
 	public void randomEquation() {
 		sc.setRandomEquation();
 		gc.initGrid(gc.getViewColumn());

@@ -11,13 +11,14 @@ import guessequation.modle.GuessModle;
 import guessequation.modle.StatisticsModle;
 import guessequation.view.GameView;
 import guessequation.view.View;
-
+//Controller of game page
 public class GameController implements ControllerObserver{
-	private ArrayList<Character> list = new ArrayList<>();
-	private HashMap<Character,Integer> map = new HashMap<Character,Integer>();
+	private ArrayList<Character> list = new ArrayList<>();//List of equation characters entered
+	private HashMap<Character,Integer> map = new HashMap<Character,Integer>();//Sequence number corresponding to equation characters
 	private GameView view;
 	private GuessModle modle;
 	private StatisticsModle smodle;
+	//Constructor Initializers 
 	public GameController(GameView view,GuessModle modle,StatisticsModle smodle) {
 		this.view = view;
 		this.modle = modle;
@@ -38,6 +39,7 @@ public class GameController implements ControllerObserver{
 		map.put('/',13);
 		map.put('=',14);
 	}
+	//Check whether the equation meets the standard
 	public boolean legal(int column) {
 		String re1 =modle.getEquation(list);
 		String rec = modle.legal(re1,column);
@@ -50,16 +52,18 @@ public class GameController implements ControllerObserver{
 			return false;
 		}
 	}
+	//Equation guessing method
 	public void guess() {
-//		ArrayList<String> als = modle.getEquationList(list);
 		view.setIndex(0);
 		ArrayList<Integer> relist = modle.guessModle(list);
+		//Real time update interface
 		Thread t = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				// TODO 自动生成的方法存根
-				int greenSum = 0;
+				int greenSum = 0;//Correct quantity
+				//Traverse the result list and output different colored numbers to the interface
 				for(int i = 0;i<relist.size();i++) {
 					int value = relist.get(i);
 					char ind = list.get(i);
@@ -98,21 +102,21 @@ public class GameController implements ControllerObserver{
 				view.setIndex(0);
 				view.lineAdd();
 				list.clear();
-				if(greenSum == relist.size()) {
+				if(greenSum == relist.size()) {//Guess correctly
 					view.won(); 
 					view.initGrid(view.getColumn());
 					if(!modle.isDisplayError()) {
-						smodle.addGamesPlayed();
-						smodle.addGamesWon();
-						smodle.setPercentageWin((smodle.getGamesWon()*1.0/smodle.getGamesPlayed())*100);
-						smodle.setBestTry(view.getColumn());
-						smodle.notifyObservers();
-						smodle.initCorrectNumberList();
+						smodle.addGamesPlayed();//Game count+1
+						smodle.addGamesWon();//Game Won+1
+						smodle.setPercentageWin((smodle.getGamesWon()*1.0/smodle.getGamesPlayed())*100);//Set winning rate
+						smodle.setBestTry(view.getColumn());//Set the best score frequency serial number
+						smodle.notifyObservers();//Notify all observers
+						smodle.initCorrectNumberList();//Reinitialize the correct number list
 					}
-					modle.setColumn(view.getColumn());
-					modle.setEquation();
-					modle.notifyObservers();
-				}else if(greenSum != relist.size() && view.getLine() >= 6) {
+					modle.setColumn(view.getColumn());//Reset equation length
+					modle.setEquation();//Regenerate equation
+					modle.notifyObservers();//Notify all observers
+				}else if(greenSum != relist.size() && view.getLine() >= 6) {//Guessing is incorrect 6 times
 					view.fail(); 
 					view.initGrid(view.getColumn());
 					if(!modle.isDisplayError()) {
@@ -131,32 +135,40 @@ public class GameController implements ControllerObserver{
 		});
 		t.start();
 	}
+	//Clear list content
 	public void clearList() {
 		list.clear();
 	}
+	//Add content to the list
 	public void add(char str,ImageIcon icon) {
 		if(view.forward(icon)) {
 			list.add(str);
 		}
 	}
+	//Delete List Content
 	public void remove(ImageIcon icon) {
 		if(!list.isEmpty()) {
 			list.remove(list.size()-1);
 			view.backward(icon);
 		}
 	}
+	//Display prompt messages
 	public void prompt(String str) {
 		view.prompt(str);
 	}
+	//Reinitialize the program
 	public void initGrid(int column) {
 		view.initGrid(column);
 		modle.setColumn(view.getColumn());
 		modle.setEquation();
 		modle.notifyObservers();
 	}
+	
+	//Obtain equation length
 	public int getViewColumn() {
 		return view.getColumn();
 	}
+	//Observer Mode Update Method
 	@Override
 	public void updata() {
 		// TODO 自动生成的方法存根

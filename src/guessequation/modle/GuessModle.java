@@ -7,15 +7,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+//Guess Modle
 public class GuessModle extends ModleSubject{
-	private String equation;
-	private boolean displayError = false;
-	private boolean displayEquation = false;
-	private boolean randomEquation = true;
-	private ArrayList<Character> nosylsit = new ArrayList<Character>();
-	private ArrayList<ArrayList<String>> equationList = new ArrayList<ArrayList<String>>();
+	private String equation;//Represents the current equation
+	private boolean displayError = false;//Display error message switch
+	private boolean displayEquation = false;//Display Equation switch
+	private boolean randomEquation = true;//Random generation equation switch
+	private ArrayList<Character> nosylsit = new ArrayList<Character>();//Exclude symbol list
+	private ArrayList<ArrayList<String>> equationList = new ArrayList<ArrayList<String>>();//List of equations of different lengths
 	private File file = new File("src/resource/equations.txt");  
-	private int column;
+	private int column;//Equation length
+	//initialization
 	public void init() {
 		for(int i=5;i<=12;i++) {
 			equationList.add(new ArrayList<String>());
@@ -32,27 +34,34 @@ public class GuessModle extends ModleSubject{
 		this.column = column;
 	}
 
+	//Add excluded symbols
 	public void addNosylsit(char sym) {
 		nosylsit.add(sym);
 	}
+	
+	//remove excluded symbols
 	public void removeNosylsit(Character sym) {
 		nosylsit.remove(sym);
 	}
+	
+	//Set the value of the equation
 	public void setEquation() {
 		equation = loadEquation();
 	}
 	
+	//Generating equations
 	public String loadEquation() {
         int index = 0;  
-        ArrayList<String> list = equationList.get(column-5);
+        ArrayList<String> list = equationList.get(column-5);//Current length equation list
         if(randomEquation) {
         	Random rand = new Random();
         	index = rand.nextInt(list.size());
         }
-        
+        //Traverse the current length equation list and find the equation that meets the conditions
         for(int i = index;;) {
         	String line = list.get(i);
-        	boolean bnosy = true;
+        	boolean bnosy = true;//Indicates whether the current equation contains symbols to exclude
+        	//Remove equations with specified symbols
         	for(int j=0;j<nosylsit.size();j++) {
         		if(line.indexOf(nosylsit.get(j)) != -1) {
         			bnosy = false;
@@ -63,6 +72,7 @@ public class GuessModle extends ModleSubject{
             	return line;
         	}
         	i++;
+        	//Traverse to the end and return to the beginning
         	if(i == list.size()) {
         		i = 0;
         	}
@@ -72,11 +82,13 @@ public class GuessModle extends ModleSubject{
         }
 	}
 	
+	//Load file, initialize equation list
 	public void loadFile() {
         BufferedReader reader = null;  
         try {  
             reader = new BufferedReader(new FileReader(file));  
             String line = null;  
+            //Read the equation line by line and add it to the specified list based on its length
             while ((line = reader.readLine()) != null) { 
             	if(line.length() < 13) {
             		equationList.get(line.length()-5).add(line);
@@ -94,6 +106,7 @@ public class GuessModle extends ModleSubject{
             }  
         }  
 	}
+	//Obtain the current equation
 	public String getEquation() {
 		if(displayEquation) {
 			return "Now Equation:"+this.equation;
@@ -102,10 +115,12 @@ public class GuessModle extends ModleSubject{
 		}
 	}
 	
+	//Is the display error turned on
 	public boolean isDisplayError() {
 		return displayError;
 	}
 	
+	//Set display error switch
 	public boolean setDisplayError() {
 		if(this.displayError) {
 			this.displayError = false;
@@ -115,24 +130,28 @@ public class GuessModle extends ModleSubject{
 		return this.displayError;
 	}
 
+	//Is the display equation turned on
 	public boolean isDisplayEquation() {
 		return displayEquation;
 	}
 
+	//Set display equation switch
 	public boolean setDisplayEquation() {
 		if(this.displayEquation) {
 			this.displayEquation = false;
 		}else {
 			this.displayEquation = true;
 		}
-		notifyObservers();
+		notifyObservers();//Notify all observers
 		return this.displayEquation;
 	}
 
+	//Returns the switch for a random equation
 	public boolean isRandomEquation() {
 		return randomEquation;
 	}
 
+	//Set the switch for stochastic equations
 	public boolean setRandomEquation() {
 		if(this.randomEquation) {
 			this.randomEquation = false;
@@ -142,53 +161,56 @@ public class GuessModle extends ModleSubject{
 		return this.randomEquation;
 	}
 
-	public ArrayList<String> getEquationList(ArrayList<Character> lstr) {
-		ArrayList<String> lrec = new ArrayList<>(); 
-		int upindex = 0;
-		String temp = "";
-		for(int i=0;i<lstr.size();i++) {
-			if(lstr.get(i) == '+') {
-				if(upindex != i) {
-					lrec.add(temp);
-				}
-				temp = "";
-				lrec.add("+");
-				upindex = i+1;
-			}else if(lstr.get(i) == '-') {
-				if(upindex != i) {
-					lrec.add(temp);
-				}
-				temp = "";
-				lrec.add("-");
-				upindex = i+1;
-			}else if(lstr.get(i) == '*') {
-				if(upindex != i) {
-					lrec.add(temp);
-				}
-				temp = "";
-				lrec.add("*");
-				upindex = i+1;
-			}else if(lstr.get(i) == '/') {
-				if(upindex != i) {
-					lrec.add(temp);
-				}
-				temp = "";
-				lrec.add("/");
-				upindex = i+1;
-			}else if(lstr.get(i) == '=') {
-				if(upindex != i) {
-					lrec.add(temp);
-				}
-				temp = "";
-				lrec.add("=");
-				upindex = i+1;
-			}else {
-				temp += lstr.get(i);
-			}
-		}
-		lrec.add(temp);
-		return lrec;
-	}
+//	
+//	public ArrayList<String> getEquationList(ArrayList<Character> lstr) {
+//		ArrayList<String> lrec = new ArrayList<>(); 
+//		int upindex = 0;
+//		String temp = "";
+//		for(int i=0;i<lstr.size();i++) {
+//			if(lstr.get(i) == '+') {
+//				if(upindex != i) {
+//					lrec.add(temp);
+//				}
+//				temp = "";
+//				lrec.add("+");
+//				upindex = i+1;
+//			}else if(lstr.get(i) == '-') {
+//				if(upindex != i) {
+//					lrec.add(temp);
+//				}
+//				temp = "";
+//				lrec.add("-");
+//				upindex = i+1;
+//			}else if(lstr.get(i) == '*') {
+//				if(upindex != i) {
+//					lrec.add(temp);
+//				}
+//				temp = "";
+//				lrec.add("*");
+//				upindex = i+1;
+//			}else if(lstr.get(i) == '/') {
+//				if(upindex != i) {
+//					lrec.add(temp);
+//				}
+//				temp = "";
+//				lrec.add("/");
+//				upindex = i+1;
+//			}else if(lstr.get(i) == '=') {
+//				if(upindex != i) {
+//					lrec.add(temp);
+//				}
+//				temp = "";
+//				lrec.add("=");
+//				upindex = i+1;
+//			}else {
+//				temp += lstr.get(i);
+//			}
+//		}
+//		lrec.add(temp);
+//		return lrec;
+//	}
+//	
+	//Retrieve a string from the passed in character set
 	public String getEquation(ArrayList<Character> lstr) {
 		String temp = "";
 		for(int i=0;i<lstr.size();i++) {
@@ -196,21 +218,25 @@ public class GuessModle extends ModleSubject{
 		}
 		return temp;
 	}
+	//Check if the input equation meets the standard
 	public String legal(String str,int column) {
 		int lsum = 0,upindex = 0,rsum = 0;
 		if(equation.equals("There is no equation that meets the requirements")) {
 			return equation;
 		}
-		ArrayList<Character> slist = new ArrayList<>();
-		ArrayList<Integer> ilist = new ArrayList<>();
+		ArrayList<Character> slist = new ArrayList<>();//Store operation symbols
+		ArrayList<Integer> ilist = new ArrayList<>();//Storing Numbers
+		//Determine if the length is qualified
 		if(str.length() != column) {
 			return "Equation length is less than "+column+"!";
 		}
+		//Determine whether the operation symbol is qualified
 		if(str.indexOf('=') == -1||(str.indexOf('+') == -1&&str.indexOf('-') == -1
 				&&str.indexOf('*') == -1&&str.indexOf('/') == -1)) {
 			return "One or more symbols of \"=\", \"+\", \"-\", \"*\", \"/\" are missing!";
 		}
 		
+		//Parse character sets, extract symbols and numbers, and store them in a list
 		for(int i=0;i<str.length();i++) {
 			if(str.charAt(i) == '+') {
 				slist.add('+');
@@ -241,11 +267,12 @@ public class GuessModle extends ModleSubject{
 				ilist.add(Integer.valueOf(str.substring(upindex)));
 			}
 		}
-//		if(upindex < str.length())
-//			result = Integer.valueOf(str.substring(upindex));
+		//Determine if the equation format is correct
 		if(slist.size() + 1 != ilist.size()) {
 			return "Equation format error!";
 		}
+		
+		//Handling multiplication and division
 		for(int i=0;i<slist.size();i++) {
 			if(slist.get(i) == '*') {
 				int temp = ilist.get(i)*ilist.get(i+1);
@@ -266,8 +293,9 @@ public class GuessModle extends ModleSubject{
 		}
 		int index = 0;
 		int startIndex = 0;
+		//Processing addition and subtraction
 		while(true) {
-			int sum = 0;
+			int sum = 0;//Operation result
 			for(int i=startIndex;i<slist.size();i++) {
 				if(i == startIndex && i<slist.size()) {
 					if(slist.get(startIndex) == '+') {
@@ -307,77 +335,21 @@ public class GuessModle extends ModleSubject{
 				break;
 			}
 		}
-		
+		//Judging whether the left and right sides of the equation are equal
 		if(lsum == rsum) {
 			return "OK";
 		}else {
 			return "The left and right sides of the equation are not equal!";
 		}
 	}
-//	public String creatFun1(int length) {
-//		Random rand = new Random();  
-//        int result = rand.nextInt(100); // 生成0到99之间的随机数
-//        int num1 = rand.nextInt(100);
-//        int i = 1;
-//        int symbol = rand.nextInt(2);
-//        while(true) {
-//        	String str = "";
-//        	if(symbol == 0) {
-//    			if(num1 % i == 0) {
-//    				str = num1+"/"+i +"="+num1/i;
-//    				if(str.length() > length) {
-//    					num1/=10;
-//    				}else if(str.length() < length) {
-//    					
-//    				}
-//    			}
-//    		}else if(symbol == 1)  {
-//    			str = num1+"-"+(num1-result) +"="+result;
-//    		}
-//    		if(str.length() == length) {
-//    			return str;
-//    		}
-//        }
-//	}
-//	public String creatFun(int length) {
-//		Random rand = new Random();  
-//        int result = rand.nextInt(100); // 生成0到99之间的随机数
-//        int num1 = rand.nextInt(100);
-//        if(num1 >= result) {
-//        	int symbol = rand.nextInt(2);
-//        	while(true) {
-//        		String str = "";
-//        		if(symbol == 0) {
-//        			if(result != 0 && num1 % result == 0) {
-//        				str = num1+"/"+num1/result +"="+result;
-//        			}else {
-//        				str = num1+"-"+(num1-result) +"="+result;
-//        			}
-//        		}else if(symbol == 1)  {
-//        			str = num1+"-"+(num1-result) +"="+result;
-//        		}
-//        		if(str.length() == length) {
-//        			return str;
-//        		}
-//        	}
-//        }else if(num1 < result){
-//        	while(true) {
-//        		String str = "";
-//        		int symbol = rand.nextInt(2);
-//        		if(symbol == 0) {
-//        			if(result % num1 == 0) {
-//        				str = num1+"*"+result/num1 +"="+result;
-//        			}
-//        		}else if(symbol == 1)  {
-//        			str = num1+"+"+(result - num1) +"="+result;
-//        		}
-//        		if(str.length() == length) {
-//        			return str;
-//        		}
-//        	}
-//        }
-//        return null;
-//	}
+
+	//Check if the guessed equation is correct,
+	/*
+	 * -1 indicates that the character has never appeared, 
+	 * 1 indicates that the character appears and is positioned correctly, 
+	 * and 2 indicates that the character appears and is positioned incorrectly
+	 * 
+	 */
 	public ArrayList<Integer> guessModle(ArrayList<Character> inlist){
 		ArrayList<Integer> relist = new ArrayList<Integer>();
 		String sline = equation;

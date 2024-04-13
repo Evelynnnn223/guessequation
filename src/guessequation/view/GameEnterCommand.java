@@ -1,5 +1,6 @@
 package guessequation.view;
 
+//GameEnter command
 public class GameEnterCommand extends Command {
 	public GameEnterCommand(Action ac) {
 		super();
