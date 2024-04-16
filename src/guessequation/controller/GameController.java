@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 import guessequation.modle.GuessModle;
 import guessequation.modle.StatisticsModle;
 import guessequation.view.GameView;
-import guessequation.view.View;
+import guessequation.view.Main;
 //Controller of game page
 public class GameController implements ControllerObserver{
 	private ArrayList<Character> list = new ArrayList<>();//List of equation characters entered
@@ -116,7 +116,7 @@ public class GameController implements ControllerObserver{
 					modle.setColumn(view.getColumn());//Reset equation length
 					modle.setEquation();//Regenerate equation
 					modle.notifyObservers();//Notify all observers
-				}else if(greenSum != relist.size() && view.getLine() >= 6) {//Guessing is incorrect 6 times
+				}else if(greenSum != relist.size() && view.getLine() >= modle.getGuessAllow()) {//Guessing is incorrect modle.getGuessAllow() times
 					view.fail(); 
 					view.initGrid(view.getColumn());
 					if(!modle.isDisplayError()) {

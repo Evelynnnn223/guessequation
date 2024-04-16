@@ -17,6 +17,7 @@ public class GuessModle extends ModleSubject{
 	private ArrayList<ArrayList<String>> equationList = new ArrayList<ArrayList<String>>();//List of equations of different lengths
 	private File file = new File("src/resource/equations.txt");  
 	private int column;//Equation length
+	private int guessAllow = 6;//Number of guesses allowed
 	//initialization
 	public void init() {
 		for(int i=5;i<=12;i++) {
@@ -26,6 +27,14 @@ public class GuessModle extends ModleSubject{
 		setEquation();
 	}
 	
+	public int getGuessAllow() {
+		return guessAllow;
+	}
+
+	public void setGuessAllow(int guessAllow) {
+		this.guessAllow = guessAllow;
+	}
+
 	public int getColumn() {
 		return column;
 	}
@@ -161,55 +170,6 @@ public class GuessModle extends ModleSubject{
 		return this.randomEquation;
 	}
 
-//	
-//	public ArrayList<String> getEquationList(ArrayList<Character> lstr) {
-//		ArrayList<String> lrec = new ArrayList<>(); 
-//		int upindex = 0;
-//		String temp = "";
-//		for(int i=0;i<lstr.size();i++) {
-//			if(lstr.get(i) == '+') {
-//				if(upindex != i) {
-//					lrec.add(temp);
-//				}
-//				temp = "";
-//				lrec.add("+");
-//				upindex = i+1;
-//			}else if(lstr.get(i) == '-') {
-//				if(upindex != i) {
-//					lrec.add(temp);
-//				}
-//				temp = "";
-//				lrec.add("-");
-//				upindex = i+1;
-//			}else if(lstr.get(i) == '*') {
-//				if(upindex != i) {
-//					lrec.add(temp);
-//				}
-//				temp = "";
-//				lrec.add("*");
-//				upindex = i+1;
-//			}else if(lstr.get(i) == '/') {
-//				if(upindex != i) {
-//					lrec.add(temp);
-//				}
-//				temp = "";
-//				lrec.add("/");
-//				upindex = i+1;
-//			}else if(lstr.get(i) == '=') {
-//				if(upindex != i) {
-//					lrec.add(temp);
-//				}
-//				temp = "";
-//				lrec.add("=");
-//				upindex = i+1;
-//			}else {
-//				temp += lstr.get(i);
-//			}
-//		}
-//		lrec.add(temp);
-//		return lrec;
-//	}
-//	
 	//Retrieve a string from the passed in character set
 	public String getEquation(ArrayList<Character> lstr) {
 		String temp = "";
